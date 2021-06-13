@@ -1,0 +1,43 @@
+﻿@using System.Data
+@using elrincon.web.Models.SharedModel.GridModel
+@model elrincon.web.Models.SharedModel.GridModel.ElDataGridModel
+
+@{
+
+    DataRowCollection rows = Model.GridTable.GridTable.Rows;
+    var keyField = Model.GridTable.KeyField;
+}
+
+@*----------rows --------------------*@
+@{
+    if (Model.GridRows.Count <= 0)
+    {
+        return;
+    }
+
+    foreach (DataRow dataRow in rows)
+    {
+        <div class="row grid-row">
+            @{
+                foreach (GridRow gridRow in Model.GridRows)
+                {
+                    <div class="cell" style="width: @gridRow.RowWith">@dataRow[gridRow.DbName].ToString()</div>
+                }
+
+                if (Model.ActionButtons.Count > 0)
+                {
+                    <div class="cell grid-img-cell" style="width:@Model.ActionButtonWith !important">
+                        @{
+                            var keyValue = dataRow[keyField];
+                            foreach (ActionButton actionButton in Model.ActionButtons)
+                            {
+                                <img class="grid-img" title="@actionButton.Title" onclick="@(@actionButton.FunctionName)(@(keyValue), this)" src="@actionButton.Url">
+                            }
+                        }
+                    </div>
+                }
+            }
+        </div>
+
+    }
+}

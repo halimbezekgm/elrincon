@@ -1,0 +1,249 @@
+﻿@using elrincon.web.Models.SharedModel
+@using elrincon.web.Models.Yonetim.MuhasebeTanimlari
+@model List<elrincon.web.Models.Yonetim.MuhasebeTanimlari.MuhasebeKayitlariModel>
+@{
+    ViewBag.Title = "EmptyView";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<style>
+    img {
+        display: none;
+        height: 16px;
+    }
+
+    .showAdd {
+        height: 18px;
+        text-align: right;
+    }
+
+    .addNew {
+        height: 41px;
+        margin-bottom: 9px;
+    }
+
+    .showAdd:hover > img {
+        display: inline !important;
+    }
+
+    .duzenle {
+        padding: 0;
+    }
+    .parentDiv {
+        font-size: 12px !important;
+        overflow-y: auto;
+        height: calc(100% - 96px);
+        width: 785px;
+    }
+    #loading-image {
+        position: sticky;
+        top: 50%;
+        display: initial; 
+        height: 40px;
+    }
+</style>
+<script src="~/Scripts/jquery-3.5.1.min.js"></script>
+
+<div class="parentDiv" style="">
+    <div class="el_row" style="background-color: #abb6bb;margin-top: 6px;font-weight: bold;display: flex">
+        <div class="cell-4">MUHASEBE BAĞLANTI HESAP TANIMLAMA</div>
+        <div class="cell-4">ALT HESAP</div>
+        <div class="cell-4">HESAP ADI</div>
+    </div>
+    @{
+        foreach (MuhasebeKayitlariModel kmodel in Model)
+        {
+            <div data-id="@kmodel.Id" class="el_row row parentNewKasaKod">
+                <div id="" class="cell-4 addNew addNewKasaKodu">
+                    @{Html.RenderPartial("ElInput", kmodel.MuhasebeKasaKodu);}
+                    <div class="showAdd" style="height: 18px;">
+                        <img class="addNewKasaKod" onclick="addNewKasaKod(this)" src="~/Content/images/add.png"/>
+                        <img class="deleteNewKasaKod" onclick="deleteNewKasaKod(this)" src="~/Content/images/delete.png"/>
+                    </div>
+                </div>
+                <div class="cell-8 parentNewKasaBilgiKod" style="padding: 0;">
+
+                    @{
+                        foreach (MuhasebeTanimlariBilgiKodu bilgiKodu in kmodel.MuhasebeTanimlariBilgiKodlari)
+                        {
+                            <div class="row el_row row-12" style="padding:0px">
+                                <div id="" data-id="@bilgiKodu.DetayId" class="cell-6 addNew addNewNewKasaBilgiKodu">
+                                    @{Html.RenderPartial("ElInput", bilgiKodu.MuhasebeKasaBilgiKodu);}
+                                    <div class="showAdd" style="height: 18px;">
+                                        <img class="addNewKasaBilgiKod" onclick="addNewKasaBilgiKod(this)" src="~/Content/images/add.png" />
+                                        <img class="deleteNewKasaBilgiKod" onclick="deleteNewKasaBilgiKod(this)" src="~/Content/images/delete.png" />
+                                    </div>
+                                </div>
+                                <div class="cell-6">
+                                    @{
+                                        foreach (MuhasebeTanimlariBilgiDetayKodu bilgiDetayKodu in bilgiKodu.MuhasebeTanimlariBilgiDetayKodlari)
+                                        {
+                                            <div class="row parentNewKasaBilgiDetayKod" style="padding: 0">
+                                                <div id="" class="cell-12 addNew">
+                                                    @{Html.RenderPartial("ElInput", bilgiDetayKodu.MuhasebeKasaBilgiDetayKodu);}
+                                                    <div class="showAdd" style="height: 18px;">
+                                                        <img class="addNewKasaBilgiDetayKod" onclick="addNewKasaBilgiDetayKod(this)" src="~/Content/images/add.png" />
+                                                        <img class="deleteNewKasaBilgiDetayKod" onclick="deleteNewKasaBilgiDetayKod(this)" src="~/Content/images/delete.png" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            
+
+                            </div>
+
+                        }
+                    }
+
+                    </div>
+
+            </div>
+        }
+    }
+
+</div>
+
+<div class="cell" align="right" style="top: 37%">
+    <div class="row" style=" width: fit-content;">
+        <button class="el-action-button save_muhasebe_tanmlari_data"> Kaydet </button>
+    </div>
+</div>
+@{
+    ElInputModel modelEmpty = new ElInputModel(InputDataType.Text);
+}
+<div class="body-content parentNewKasaKodEmpty" style="display: none">
+    <div data-id="0" class="el_row row  parentNewKasaKod">
+        <div id="" class="cell-4 addNew">
+            @{Html.RenderPartial("ElInput", @modelEmpty);}
+            <div class="showAdd" style="height: 18px;">
+                <img class="addNewKasaKod" onclick="addNewKasaKod(this)" src="~/Content/images/add.png" />
+                <img class="deleteNewKasaKod" onclick="deleteNewKasaKod(this)" src="~/Content/images/delete.png" />
+            </div>
+        </div>
+        <div class="cell-8 parentNewKasaBilgiKodEmpty" style="padding: 0;">
+            <div class="row el_row row-12">
+
+                <div id="" class="cell-6 addNew addNewNewKasaBilgiKodu">
+                    @{Html.RenderPartial("ElInput", @modelEmpty);}
+                    <div class="showAdd" style="height: 18px;">
+                        <img class="addNewKasaBilgiKod" onclick="addNewKasaBilgiKod(this)" src="~/Content/images/add.png" />
+                        <img class="deleteNewKasaBilgiKod" onclick="deleteNewKasaBilgiKod(this)" src="~/Content/images/delete.png" />
+                    </div>
+                </div>
+                <div class="cell-6 parentNewKasaBilgiDetayKod parentNewKasaBilgiDetayKodEmpty" style="padding: 0">
+                    <div id="" class="cell-12 addNew">
+                        @{Html.RenderPartial("ElInput", @modelEmpty);}
+                        <div class="showAdd" style="height: 18px;">
+                            <img class="addNewKasaBilgiDetayKod" onclick="addNewKasaBilgiDetayKod(this)" src="~/Content/images/add.png" />
+                            <img class="deleteNewKasaBilgiDetayKod" onclick="deleteNewKasaBilgiDetayKod(this)"  src="~/Content/images/delete.png" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+
+    //bilgi detay kod
+    function addNewKasaBilgiDetayKod(tht) {
+        var empty = $(".parentNewKasaBilgiDetayKodEmpty").html();
+        $(tht).parent().parent().parent().append(empty);
+
+    };
+    function deleteNewKasaBilgiDetayKod(tht) {
+        $(tht).parent().parent().remove();
+    };
+
+    //bilgi kod 
+    function addNewKasaBilgiKod(tht) {
+        var empty = $(".parentNewKasaBilgiKodEmpty").html();
+        $(tht).parent().parent().parent().parent().append(empty);
+
+    };
+
+    function deleteNewKasaBilgiKod(tht) { 
+        $(tht).parent().parent().parent().remove();
+    };
+
+    //kasa
+    function addNewKasaKod(tht) {
+        var empty = $(".parentNewKasaKodEmpty").html();
+        $(tht).parent().parent().parent().append(empty);
+
+    };
+
+    function deleteNewKasaKod(tht) { 
+        $(tht).parent().parent().parent().remove();
+    };
+
+    //save data
+    $(".save_muhasebe_tanmlari_data").on("click", function () {
+
+        var savaModel = {};
+        var SaveModels = [];
+
+
+        $('.parentDiv > .row').each(function () {
+            var datakasaBilgi = [];
+
+
+            $(this).find('.parentNewKasaBilgiKod > .row').each (function() {
+                var datakasaBilgiDetay = [];
+                var tht = $(this); 
+
+                tht.find('.parentNewKasaBilgiDetayKod > .addNew').each (function() {
+                    
+                    datakasaBilgiDetay.push({
+                        MuhasebeKasaBilgiDetayKodu:$(this).find("input").val()
+                    });
+         
+                });  
+
+                datakasaBilgi.push({
+                    DetayId: $(this).find(".addNewNewKasaBilgiKodu").data('id'),
+                    MuhasebeKasaBilgiKodu: $(this).find("input").val(),
+                    MuhasebeTanimlariBilgiDetayKodlari: datakasaBilgiDetay
+                }); 
+
+            }); 
+
+            SaveModels.push({
+                Id : $(this).data('id'),
+                MuhasebeKasaKodu: $(this).find(".addNewKasaKodu input").val(),
+                MuhasebeTanimlariBilgiKodlari: datakasaBilgi
+            });
+        });
+         
+        //savaModel.HesapId = 1; 
+        savaModel.SaveModels = SaveModels;
+
+        var dataSend = JSON.stringify({ 'saveModel': savaModel});
+
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            dataType: "json", 
+            type: 'POST',
+            url: '@Url.Action("SaveOrUpdate","MuhasebeTanimlari")',
+            data: dataSend,
+            beforeSend: function () {
+                $("#loading").css("display", "block");
+            },
+            success: function (result) {
+
+                if (result.result == "ok") {
+                    ShowAlertMessage("Başarılı", "İşlem başarıyla gerçekleşti","success");
+
+                } else {
+                    ShowAlertMessage("Hata", result.message, "alert");
+                }
+            }
+        }).done(function () {
+            $("#loading").css("display", "none");
+        });
+    });
+
+</script>

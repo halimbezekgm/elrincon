@@ -1,0 +1,89 @@
+﻿@model elrincon.web.Models.Yonetim.DomainEditorModel
+@{
+    ViewBag.Title = "Domain İsmi Ekle ";
+    Layout = "~/Views/_Modal.cshtml";
+}
+<style>
+  /*  .not_change_div {
+        pointer-events: none;
+        display: inline-block;
+        background-color: #F0F0F0;
+        border-radius: 6px;
+        border: 1px solid #EEE;
+    }*/
+
+    .open-modal .window {
+        max-width: 96% !important;
+    }
+
+    .window-content {
+        width: 477px;
+        overflow: hidden;
+    }
+
+</style>
+<div class="row el_row">
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Adı :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", @Model.NewDomainName);}
+            </div>
+        </div>
+    </div> 
+</div> 
+<div class="row el_row">
+    
+    <div class="cell" align="right">
+        <div class="row" style="width: fit-content;">
+            <button onclick="saveDomainChild()" class="button el-action-button"> Kaydet /Güncelle </button>
+        </div>
+    </div>
+</div> 
+
+<script src="~/Scripts/v4-metro.min.js"></script>
+<script>
+
+    $( document ).ready(function() {
+        $(".modal-editor-child .buttons").html('<span class="btn-close editor-btn-child-close"></span>');
+        $(".modal-editor-child .window").css("margin-top","9%").css("max-height","40%");
+    });
+
+    function saveDomainChild() {
+        var id = '@Model.ChildId';
+        var listeid = '@Model.ListeId';
+        var deger = $("#domain_name_input_id").val();
+
+        $.ajax({
+            url: '@Url.Action("SaveOrUpdateChild","DomainEditor")',
+            data: {
+                id,
+                listeid,
+                deger
+            },
+            cash: false,
+            beforesend: function() {
+
+            },
+            success: function (result) {
+                if (result.result == "ok") {
+                    hideModalChild();
+                    reloadGrid_domain_child_liste_grid_id();
+
+                    ShowAlertMessage("Başarılı", "İşlem başarıyla gerçekleşti","success");
+
+                } else {
+                    ShowAlertMessage("Hata", result.message, "alert");
+                }
+                
+            },
+            error: function(result) {
+                console.error(result.message);
+                ShowAlertMessage("Hata", result.message, "alert");
+            }
+        });
+    }
+
+</script>

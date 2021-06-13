@@ -1,0 +1,67 @@
+﻿@using elrincon.web.Models.Yonetim.Yetki
+@model List<elrincon.web.Models.Yonetim.Yetki.YetkiEditorModel>
+@{
+    ViewBag.Title = "Rol Editör ";
+    Layout = "~/Views/_Modal.cshtml";
+}
+<style>
+    .open-modal .window {
+        height: 300px !important;
+        width: 500px !important;
+    }
+</style>
+
+<div id="yetkiTableId" class="cell-12" style="margin-top:20px">
+    @foreach (YetkiEditorModel item in Model)
+    {
+        <div class="cell">
+            <div class="row">
+                <div class="cell-2">
+                    <input value="@item.RolId" type="checkbox" data-role="switch" data-material="true" @item.YetkiDurum>
+                </div>
+                <div class="cell-10">
+                    @item.RolAciklama
+                </div>
+            </div>
+        </div> 
+    }
+    <div class="cell" align="right">
+        <div class="row">
+            <button class="el-action-button" style="margin:auto !important" onclick="save_yetki(@Model[0].KullaniciId)"> Kaydet </button>
+        </div>
+    </div>
+</div> 
+
+
+<script>
+    function save_yetki(id) {
+        var data = [];
+        FillYetki(data, id);
+        var json = JSON.stringify(data);
+        $.ajax({
+            url: '/YetkiEditor/SaveYetki',
+            type: 'Post',
+            dataType: 'json',
+            data: json,
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                if (result.result == "ok") {
+                    ShowAlertMessage("Başarılı", "İşlem başarıyla gerçekleşti", "success");
+                    hideModal(); 
+                } else {
+                    ShowAlertMessage("Hata", result.message, "alert");
+                }
+            }
+        });
+    }
+    function FillYetki(data, id) {
+        $("#yetkiTableId input").each(function () {
+            var item = {}
+            if ($(this).is(':checked')) {
+                item["RolId"] = +$(this).val();
+                item["KullaniciId"] = id;
+                data.push(item);
+            }
+        }); 
+    }
+</script>

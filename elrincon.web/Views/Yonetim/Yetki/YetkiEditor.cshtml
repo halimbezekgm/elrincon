@@ -1,0 +1,93 @@
+﻿@using elrincon.web.Models.Yonetim.Yetki
+@model List<elrincon.web.Models.Yonetim.Yetki.YetkiEditorModel>
+@{
+    ViewBag.Title = Model[0].KullaniciAdi + " Kullanıcısının Yetkileri";
+    Layout = "~/Views/_Modal.cshtml";
+}
+<style>
+    .open-modal .window {
+        height: 500px !important;
+        width: 600px !important;
+    }
+    #yetkiTableId td{
+        text-align:center;
+    }
+</style>
+
+<div class="cell-12" style="margin-top:20px">
+    <table style="width: 100%">
+        <thead>
+            <tr>
+                <th>Kart Adı</th>
+                <th>Görüntüle</th>
+                <th>Ekle</th>
+                <th>Güncelle</th>
+                <th>Sil</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (YetkiEditorModel item in Model)
+            { 
+                <tr class="yetkiTableId">
+                    <td>
+                        @item.KartAdi
+                    </td>
+                    <td>
+                        <input class="goruntule" value="@item.KartId" type="checkbox" data-role="switch" data-material="true" @item.GoruntuleDurum>
+                    </td>
+                    <td>
+                        <input class="ekle"  value="@item.KartId" type="checkbox" data-role="switch" data-material="true" @item.EkleDurum>
+                    </td>
+                    <td>
+                        <input class="guncelle"  value="@item.KartId" type="checkbox" data-role="switch" data-material="true" @item.GuncelleDurum>
+                    </td>
+                    <td>
+                        <input class="sil"  value="@item.KartId" type="checkbox" data-role="switch" data-material="true" @item.SilDurum>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table> 
+
+    <div class="cell" align="right" style="margin-top: 30px">
+        <div class="row">
+            <button class="el-action-button" style="margin:auto !important" onclick="save_yetki(@Model[0].KullaniciId)"> Kaydet </button>
+        </div>
+    </div>
+</div> 
+
+<script>
+    function save_yetki(id) {
+        var data = [];
+        FillYetki(data, id);
+        var json = JSON.stringify(data);
+        $.ajax({
+            url: '/YetkiEditor/SaveYetki',
+            type: 'Post',
+            dataType: 'json',
+            data: json,
+            contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                if (result.result == "ok") {
+                    ShowAlertMessage("Başarılı", "İşlem başarıyla gerçekleşti", "success");
+                    hideModal(); 
+                } else {
+                    ShowAlertMessage("Hata", result.message, "alert");
+                }
+            }
+        });
+    }
+
+    function FillYetki(data, id) {
+        $(".yetkiTableId").each(function () { 
+            var item = {}
+            item["KartId"] = $(this).find("input:nth-child(1)").val();
+            item["KullaniciId"] = id;
+            item["GoruntuleDurum"] = $(this).find(".goruntule input").is(':checked');
+            item["EkleDurum"] = $(this).find(".ekle input").is(':checked');
+            item["GuncelleDurum"] = $(this).find(".guncelle input").is(':checked');
+            item["SilDurum"] = $(this).find(".sil input").is(':checked'); 
+            data.push(item);
+        });
+    }
+</script>

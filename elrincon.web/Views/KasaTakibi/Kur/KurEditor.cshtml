@@ -1,0 +1,276 @@
+﻿@model elrincon.web.Models.KasaTakibi.Kur.KurEditorModel
+
+@{
+    ViewBag.Title = ViewBag.Title;
+    var forQuery = Model.IsForDateQuery;
+    Layout = forQuery ? "~/Views/_Layout.cshtml" : "~/Views/_Modal.cshtml";
+    var styleTarih = "text-align: center; font-weight: bold;";
+    if (!forQuery)
+    {
+        styleTarih += "display: none";
+    }
+}
+
+<style>
+    .open-modal .window {
+        height: 600px !important;
+        width: 800px !important;
+    }
+    #dovizTable td{
+        border: 1px solid;
+    }
+    .input-value {
+        width: calc(100% - 240px);
+    }
+    .cell { 
+        padding: 2px;
+    }
+</style>
+
+<div class="cell-12 parentclass" style="">
+   
+    <div class="cell" style="@styleTarih">
+        <div class="row">
+            <div class="cell-6">
+                @{Html.RenderPartial("ElInput", Model.QueryDate);}
+
+            </div>
+            <div class="cell-6">
+                <button class="el-action-button" style="margin: auto !important" onclick="sorgula_kur()"> Sorgula </button>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="cell" style="text-align: center; font-weight: bold">
+        @Model.KurEditorKayitBaslik Tarihinde Geçerli Kurlar
+    </div>
+    <div class="cell" style="text-align: center; font-weight: bold">
+        @Model.KurEditorBaslik 15:30'da Merkez Bankasında Açıklanan Kurlar
+    </div>
+    <div class="cell" style="margin-top: 20px">
+        <div class="row">
+            <div class="input-caption">
+                USD :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", Model.InputUSDModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                EUR :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", Model.InputEURModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                GBP :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", Model.InputGBPModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                CHF :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", Model.InputCHFModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                AUD :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", Model.InputAUDModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                CAD :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", Model.InputCADModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                JPY :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", Model.InputJPYModel);}
+            </div>
+            <div class="input-caption" style="font-size: 16px; padding-left: 2px">
+                (/100)
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                CNY :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", Model.InputCNYModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                PESO MXN:
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", Model.InputPESOMXNModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                PESO CHI:
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", Model.InputPESOCHIModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                ALTIN :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", Model.InputALTINModel);}
+            </div>
+            <div class="input-caption" style="font-size: 16px; padding-left: 2px">
+                (Gr/USD)
+            </div>
+        </div>
+    </div>
+
+    <div class="cell" style="text-align: center; padding-top: 0">
+        (Not: Altın fiyatı dünkü altın kuruna bakarak alınacak.)
+    </div>
+    @*@{
+        if (!forQuery)
+        {*@
+
+    <div class="cell">
+        <div class="row">
+            <table id="dovizTable" style="width: 100%">
+                <tr>
+                    <td></td>
+                    <td>USD</td>
+                    <td>EUR</td>
+                    <td>GBP</td>
+                    <td>CHF</td>
+                    <td>AUD</td>
+                    <td>CAD</td>
+                    <td>JPY</td>
+                    <td>CNY</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>@Model.AnlikUSDModel</td>
+                    <td>@Model.AnlikEURModel</td>
+                    <td>@Model.AnlikGBPModel</td>
+                    <td>@Model.AnlikCHFModel</td>
+                    <td>@Model.AnlikAUDModel</td>
+                    <td>@Model.AnlikCADModel</td>
+                    <td>@Model.AnlikJPYModel</td>
+                    <td>@Model.AnlikCNYModel</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    @{
+        if (forQuery)
+        {
+            <div class="cell" align="right">
+                <div class="row">
+                    <button class="el-action-button" style="margin: auto !important" onclick="save_kur(@Model.id)"> Kaydet </button>
+                </div>
+            </div>
+        }
+    }     
+    
+     
+</div>
+
+<script>
+    function save_kur(id) { 
+        var data = {
+            id: id,
+            USD: $("#kur_editor_input_USD").val(),
+            EUR: $("#kur_editor_input_EUR").val(),
+            GBP: $("#kur_editor_input_GBP").val(),
+            CHF: $("#kur_editor_input_CHF").val(),
+            AUD: $("#kur_editor_input_AUD").val(),
+            CAD: $("#kur_editor_input_CAD").val(),
+            JPY: $("#kur_editor_input_JPY").val(),
+            CNY: $("#kur_editor_input_CNY").val(), 
+            ALTIN: $("#kur_editor_input_ALTIN").val(),
+            PESOMXN: $("#kur_editor_input_pesoMxn").val(),
+            PESOCHI: $("#kur_editor_input_pesoChi").val(),
+            Tarih: $("#input_query_date").val()
+
+        }
+        var json = JSON.stringify(data);
+        $.ajax({
+            //dataType: 'json',
+            url: '@Url.Action("SaveOrUpdate","KurEditor")',
+            data: data,
+            cash: false,
+            type: 'GET',
+
+            beforeSend: function () {
+                $("#loading").css("display", "block");
+            }, 
+            //contentType: 'application/json; charset=utf-8',
+            success: function (result) {
+                if (result.result == "ok") {
+                    //hideModal();
+                    //reloadGrid_kur_liste_grid_id();
+                    ShowAlertMessage("Başarılı", "İşlem başarıyla gerçekleşti", "success");
+                } else {
+                    ShowAlertMessage("Hata", result.message, "alert");
+                }
+            }
+        }).done(function () {
+            $("#loading").css("display", "none");
+        });
+    }
+
+    function sorgula_kur() {
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Index","KurEditor")',
+            data: {
+                queryDate: $("#input_query_date").val()
+            }, 
+            success: function (result) {
+                    $(".parentclass").html(result);
+            }
+        });
+    }
+
+</script>

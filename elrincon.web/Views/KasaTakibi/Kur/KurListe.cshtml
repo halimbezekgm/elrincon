@@ -1,0 +1,127 @@
+﻿@model elrincon.web.Models.KasaTakibi.Kur.KurListeModel
+@{
+    ViewBag.Title = "EmptyView";
+    Layout = "~/Views/_Layout.cshtml";
+}
+<style>
+    .kurListeSorguTd{
+        padding:10px !important;
+    }
+    #kur_liste_grid_id {
+        margin: 0 !important;
+    }
+</style>
+<div class="body-content">
+    <div class="row el_row" style="height: 56px;">
+        @*<div class="cell-3">
+            <button class="button el-action-button ekle_button" style="margin-top: 10px;" onclick="add_kur_listesi_clicked()">Günlük Kur Tanımla </button>
+        </div>*@
+        <div class="cell-9" style="padding: 0">
+            <table style="width:65%">
+                <tr>
+                    <td class="kurListeSorguTd">
+                        @{Html.RenderPartial("ElInput", Model.sorguBasTarih);}
+                    </td>
+                    <td class="kurListeSorguTd">
+                        @{Html.RenderPartial("ElInput", Model.sorguBitTarih);}
+                    </td>
+                    <td class="kurListeSorguTd">
+                        <button class="button el-action-button" onclick="sorgula_kur_listesi_clicked()"> Sorgula </button>
+                    </td>
+                </tr>
+            </table> 
+        </div>
+    </div>
+    <div style="height: 86%;width: 100%">
+        @{Html.RenderPartial("~/Views/Shared/elGrid/ElDataGrid.cshtml", Model.gridModel);}
+    </div>
+</div>
+
+
+<script>
+    function add_kur_listesi_clicked() {
+        OpenEditormodal(0);
+    }
+    function edit_kur_listesi_clicked(id) {
+        OpenEditormodal(id);
+    }
+    function OpenEditormodal(id) {
+        $.ajax({
+            url: '@Url.Action("Index","KurEditor")',
+            cash: false,
+            data: {
+                id
+            },
+            beforeSend: function () {
+                $("#loading").css("display", "block");
+            },
+            TYPE: 'GET',
+            success: function(result) {
+                openModal(result);
+            }
+        }).done(function () {
+            $("#loading").css("display", "none");
+        });
+    }
+    function delete_kur_listesi_clicked(id) {
+        Metro.dialog.create({
+            title: "Satır Sil",
+            content: "<div>Kaydı silmek istediğinizden emin isiniz..</div>",
+            actions: [
+                {
+                    caption: "Evet",
+                    cls: "js-dialog-close alert",
+                    onclick: function () {
+                        $.ajax({
+                            url: '@Url.Action("DeleteRow","KurListe")',
+                            cash: false,
+                            data: {
+                                id
+                            },
+                            TYPE: 'GET',
+                            success: function (result) {
+                                if (result.result == "ok") {
+                                    ShowAlertMessage("Başarılı", "İşlem başarıyla gerçekleşti", "success");
+                                    reloadGrid_kur_liste_grid_id();
+                                } else {
+                                    ShowAlertMessage("Hata", result.message, "alert");
+                                }
+                            }
+                        });
+                    }
+                },
+                {
+                    caption: "Hayır",
+                    cls: "js-dialog-close",
+                    onclick: function () {
+                    }
+                }
+            ]
+        });
+    }
+    function sorgula_kur_listesi_clicked() {
+        var parameter = crdfor_@(Model.gridModel.GridId)();
+        parameter.CustomProperties.sorguBasTarih = $("#kur_liste_sorgu_baslangic_tarih_input_id").val();
+        parameter.CustomProperties.sorguBitTarih = $("#kur_liste_sorgu_bitis_tarih_input_id").val();
+
+        var data = {
+            parameter:parameter
+        }
+
+        $.ajax({
+            url: '@Url.Action("GetGridBody","KurListe")',
+            cash: false,
+            type: "POST",
+            data: data,
+            success: function (result) {
+                if (result != "") {
+                    $("#grid-body_kur_liste_grid_id").html(result);
+                }
+                else {
+                    ShowAlertMessage("Hata", result.message, "alert");
+                }
+            }
+        });
+
+    } 
+</script>

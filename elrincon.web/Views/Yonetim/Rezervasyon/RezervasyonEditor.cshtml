@@ -1,0 +1,192 @@
+﻿
+@model elrincon.web.Models.Yonetim.Rezervasyon.RezervasyonEditorModel
+@{
+    ViewBag.Title = "Rezervasyon";
+    Layout = "~/Views/_Modal.cshtml";
+}
+<style>
+  /*  .not_change_div {
+        pointer-events: none;
+        display: inline-block;
+        background-color: #F0F0F0;
+        border-radius: 6px;
+        border: 1px solid #EEE;
+    }*/
+
+    .open-modal .window {
+        max-width: 96% !important;
+    }
+
+    #rezervasyon_editor_input_aciklama {
+        height: 180px !important;
+    }
+
+</style>
+<div class="row el_row" style="margin-top: 30px">
+    <div class="cell-12" align="center">
+        <h6>Rezervasyon Ekle</h6>
+    </div>
+    <div class="cell-3"></div>
+    <div class="cell-3">
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Tarih :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputTarihModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Rezervasyon No :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputRezeryonNoModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Acente :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.InputAcentaModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Rehber 1 :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.Rehber1Model);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Rehber 2 :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.Rehber2Model);}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cell-3">
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Hanutcu 1:
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.Hanutcu1Model);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Hanutcu 2 :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.Hanutcu2Model);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Servis :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.InputServisPersonelModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Kisi Sayisi :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputKisiSayisiModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Ülkesi :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.InputUlkesiModel);}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cell-3"></div>
+
+    <div class="cell-12">
+        <div class="row">
+            <div class="input-caption">
+                NOT :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", @Model.InputAciklamaModel);}
+            </div>
+        </div>
+    </div>
+
+    <div class="cell" align="right">
+        <div class="row" style="width: fit-content;">
+            <button class="el-action-button save_personel_data"> Kaydet </button>
+        </div>
+    </div>
+</div>
+<script>
+    var id_value = '@Model.Id';
+    $('.save_personel_data').on("click",
+        function () {
+            
+            var dataSend = {
+                Id: id_value,
+                InputTarihModel: $('#rezervasyon_editor_input_tarih').val(),
+                InputRezeryonNoModel: $('#rezervasyon_editor_input_InputRezeryonNoModel').val(),
+                InputAcentaModel: $('#rezervasyon_editor_input_InputAcentaModel').val(),
+                InputServisModel: $('#rezervasyon_editor_input_servis').val(),
+                InputKisiSayisiModel: $('#rezervasyon_editor_input_InputKisiSayisiModel').val(),
+                InputUlkesiModel: $('#rezervasyon_editor_select_inputUlkesiModel').val(),
+                Rehber1Model: $('#rezervasyon_editor_select_inputrehber1Model').val(),
+                Rehber2Model: $('#rezervasyon_editor_select_inputrehber2Model').val(),
+                Hanutcu1Model: $('#rezervasyon_editor_select_inputhanutcu1Model').val(),
+                Hanutcu2Model: $('#rezervasyon_editor_select_inputhanutcu2Model').val(),
+                InputAciklamaModel: $('#rezervasyon_editor_input_aciklama').val()
+            }
+
+            $.ajax({ 
+                type: 'POST',
+                url: '@Url.Action("SaveOrUpdate","RezervasyonEditor")',
+                data: dataSend,
+                TYPE: 'POST',
+                success: function (result) {
+
+                    if (result.result == "ok") {
+                        hideModal();
+                        reloadGrid_rezervasyon_liste_grid_id();
+
+                        ShowAlertMessage("Başarılı", "İşlem başarıyla gerçekleşti","success");
+
+                    } else {
+                        ShowAlertMessage("Hata", result.message, "alert");
+                    }
+                }
+            });
+        });
+</script>

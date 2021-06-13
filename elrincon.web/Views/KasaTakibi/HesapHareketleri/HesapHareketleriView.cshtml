@@ -1,0 +1,128 @@
+﻿@model elrincon.web.Models.KasaTakibi.HesapHareketleri.HesapHareketleriModel
+
+@{
+    ViewBag.Title = ViewBag.Title;
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<style>
+    #kasa_banka_goruntulue_liste_grid_id {
+        margin: 0;
+    }
+    .grid-yazdir-button {
+        display: none !important;
+    }
+</style>
+
+<div style="height: 100%;width: 100%">
+    <div class="cell">
+        <div class="row">
+            <div class="cell-3">
+                <div class="cell">
+                    <div class="row">
+                        <div class="input-caption">
+                            Hesap No:
+                        </div>
+                        <div class="input-value">
+                            @{Html.RenderPartial("ElSelect", Model.HesapNo);}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cell-3">
+                <div class="cell">
+                    <div class="row">
+                        <div class="input-caption">
+                            Hesap Detay:
+                        </div>
+                        <div class="input-value">
+                            @{Html.RenderPartial("ElSelect", Model.HesapDetayNo);}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cell-6"> 
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell-3">
+                <div class="cell">
+                    <div class="row">
+                        <div class="input-caption">
+                            Tarih Başlangıç:
+                        </div>
+                        <div class="input-value">
+                            @{Html.RenderPartial("ElInput", Model.SorguTarihiBas);}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cell-3">
+                <div class="cell">
+                    <div class="row">
+                        <div class="input-caption">
+                            Tarih Bitiş :
+                        </div>
+                        <div class="input-value">
+                            @{Html.RenderPartial("ElInput", Model.SorguTarihiBitis);}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cell-6"> 
+                <button class="el-action-button"> Sorgula </button>
+            </div>
+        </div>
+    </div>
+    <div class="sorguSonucuDiv" style="height: calc(100% - 158px);">
+        <div class="row">
+
+            <div class="cell-7">
+            </div>
+            <div class="cell-3">
+                <div class="cell">
+                    <div class="row" >
+                        <div class="input-value">
+                            @{Html.RenderPartial("ElInput", Model.SorguDevirTarihi);}
+                        </div>
+                        <div class="input-caption">
+                            Devir Miktarı:
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cell-2">
+                <div class="cell">
+                    @{Html.RenderPartial("ElInput", Model.DevirMiktariveParaCinsi);}
+                </div>
+            </div>
+        </div>
+        <div class="row" style="height: 84%;">
+            <div class="cell" style="height: 100%;">
+                <div style="height: 100%;width: 100%">
+                    @{Html.RenderPartial("~/Views/Shared/elGrid/ElDataGrid.cshtml", Model.KasaBankaListGridModel);}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell-6">
+            
+            </div>
+            <div class="cell-3">
+               
+            </div>
+            <div class="cell-3" style="margin-top: -58px; ">
+                <div class="cell">
+                    <div class="row">
+                        <div class="input-caption">
+                            CARİ BAKİYE :
+                        </div>
+                        <div class="input-value">
+                            @{Html.RenderPartial("ElInput", Model.DevirMiktariveParaCinsi);}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

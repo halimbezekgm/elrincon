@@ -1,0 +1,258 @@
+﻿@using System.Data
+@using elrincon.web.Models.SharedModel
+@using elrincon.web.Models.SharedModel.GridModel
+@model elrincon.web.Models.SharedModel.GridModel.ElDataGridModel
+
+@{
+    var grid_id = string.IsNullOrWhiteSpace(Model.GridId) ? "_" + new Guid() : Model.GridId;
+
+    DataRowCollection rows = Model.GridTable.GridTable.Rows; 
+    var keyField = Model.GridTable.KeyField;
+}
+
+<div class="grid striped" id="@grid_id">
+    <div class="grid-head">
+        @*----------header --------------------*@
+        @{
+            foreach (GridRow gridRow in Model.GridRows)
+            {
+                var headerclass = "cell grid-head-cell ";
+
+                if (gridRow.IsSortuble)
+                {
+                    headerclass += " sortable-column ";
+                }
+
+                <div class="@headerclass" data-sorted="@gridRow.IsSortuble" data-column-name="@gridRow.DbName" style="width: @gridRow.RowWith">@gridRow.Caption</div>
+            }
+            if (Model.ActionButtons.Count > 0)
+            {
+                <div class="cell grid-head-cell" style="width: @Model.ActionButtonWith !important"></div>
+            }
+        }
+    </div>
+
+    <div class="grid-body">
+        <div id="grid-body_@grid_id">
+            @{Html.RenderPartial("~/Views/Shared/ELGrid/ElDataGridBody.cshtml", @Model);}
+        </div>
+    </div>
+    <div class="grid-footer">
+        @{Html.RenderPartial("~/Views/Shared/ELGrid/ElDataGridFooter.cshtml", @Model);}
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.5.1.min.js"></script>
+<script>
+    var sortubleQuery = "";
+    var gridParameter = "";
+
+    $(".sortable-column").on("click", function () {
+
+        sortubleQuery = "";
+
+        var that = $(this);
+        if (that.hasClass("sort-desc")) {
+            that.addClass("sort-asc");
+            that.removeClass("sort-desc");
+
+        } else if (that.hasClass("sort-asc")) {
+            that.removeClass("sort-asc");
+            sortubleQuery = "";
+        } else {
+            that.addClass("sort-desc");
+        }
+
+        $('.sortable-column').each(function (i) {
+
+            var that = $(this);
+
+            if (that.hasClass("sort-asc")) {
+                sortubleQuery += that.attr("data-column-name") + " asc , ";
+            }
+
+            if (that.hasClass("sort-desc")) {
+                sortubleQuery += that.attr("data-column-name") + " desc , ";
+            }
+        });
+
+
+    });
+</script>
+<script type="text/javascript">
+    @if (!string.IsNullOrEmpty(Model.DataUrl))
+    {
+
+        if (!string.IsNullOrEmpty(Model.DataUrl))
+        {
+            <text>
+    var crdfor_@(grid_id) = function() {@*Create required data for*@
+        var data = {};
+        data.PageSize = @Model.PageSize;
+        data.PageNumber = @Model.CurrentPage;
+        var sortedField = $("#@grid_id [data-sorted=True]");
+        if (sortedField.length > 0) {
+            data.OrderBy = sortedField.data().col;
+            if (sortedField.data().dir && sortedField.data().dir == "True") {
+                data.OrderDir = true;
+            } else {
+                data.OrderDir = false;
+            }
+        }
+        console.log("sent data crdfor: ", data);
+        var customProps = {};
+
+        @foreach (KeyValuePair<string, string> kvp in Model.GridParameter.CustomProperties)
+        {
+            @Html.Raw("customProps[\"" + @kvp.Key + "\"] = \"" + @kvp.Value + "\";")
+        }
+
+
+        var filterValues = {};
+        var filterInputs = $("#@(grid_id) .gd-grid-filter-row .gd-grid-column-filter"); //jquery element
+        var filterSelects = $("#@(grid_id) .gd-grid-filter-row .gd-select");
+
+        for (let i = 0; i < filterInputs.length; i++) {
+            console.log(data.code);
+            var input = $(filterInputs[i]); //jquery element
+
+            if (input.val() != "" && input.val() !== null && input.val() !== undefined) {
+                var f = input.data().col;
+                filterValues[f] = input.val();
+            }
+        }
+
+        for (let j = 0; j < filterSelects.length; j++) {
+            let select = $(filterSelects[j]); //jquery element
+            let data = select.children("button").data();
+            let g = select.parent().data().col;
+
+            console.log(data.code);
+            if ((data.code != "" && data.code !== undefined) || data.code == 0) {
+                console.log(data.code);
+                filterValues[g] = data.code;
+            }
+
+            //if (select.val() != "" && select.val() !== null && select.val() !== undefined) {
+            //    var g = select.parent().data().col;
+            //    filterValues[g] = select.val();
+            //}
+        }
+
+        if (filterInputs.length > 0) {
+            data.FilterValues = filterValues;
+        }
+        data.CustomProperties = customProps;
+        return data;
+
+    }
+
+    var rldGd_@(grid_id) = function(data) {
+        var url = "@Model.DataUrl";
+        console.log("sent data rload: ", data);
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            beforeSend: function() {
+                $("#@grid_id" + "_loading").css("display", "block");
+            },
+            success: function(e) {
+                $("#grid-body_@grid_id").html(e);
+            },
+            failure: function() {
+                $("#@grid_id" + "_loading").css("display", "none");
+                console.log("grid loading failure.");
+            },
+            error: function() {
+                $("#@grid_id" + "_loading").css("display", "none");
+                console.log("grid loading error.");
+            }
+        })
+    }
+            </text>
+
+
+            if (!string.IsNullOrEmpty(Model.DataUrl))
+            {
+                <text>
+                    $("#@grid_id .GdPagination .gd-pagination-button").off("click").on("click",
+                        function() {
+                            var requestedPage = $(this).data().page;
+                            var data = crdfor_@(grid_id)();
+                            data.PageNumber = requestedPage;
+                            rldGd_@(grid_id)(data);
+                        });
+                    $("#@grid_id .sortable-column").on("click",
+                        function() {
+                            var data = crdfor_@(grid_id)();
+                            var d = $(this).attr('data-column-name');
+
+                            data.OrderBy = sortubleQuery;
+                            rldGd_@(grid_id)(data);
+                        });
+
+                    var reloadGrid_@(grid_id) = function() {
+                        var data = crdfor_@(grid_id)();
+                        rldGd_@(grid_id)(data);
+                    };
+
+                    var itimr_@(grid_id); //input timer
+                    $(".gd-grid-column-filter").on("keyup",
+                        function() {
+                            clearTimeout(itimr_@(grid_id));
+                            itimr_@(grid_id) = setTimeout(reloadGrid_@(grid_id), 1000);
+                        });
+
+                    $(".gd-grid-column-filter").on("change",
+                        function() {
+                            clearTimeout(itimr_@(grid_id));
+                            itimr_@(grid_id) = setTimeout(reloadGrid_@(grid_id), 500);
+                        });
+
+                    $("#@grid_id .gd-grid-body .gd-grid-filter-row .gd-grid-select-parent select").on("change",
+                        function() {
+                            reloadGrid_@(grid_id)();
+                        });
+
+                    $("#size_select_@grid_id").on("change",
+                        function() {
+                            var data = crdfor_@(grid_id)();
+                            data.PageSize = $("#size_select_@grid_id").val();
+                            rldGd_@(grid_id)(data);
+                        });
+                    $("#@grid_id .page-item").on("click",
+                        function () {
+
+                            $("#@grid_id .page-item").removeClass('active');
+                            $(this).addClass('active');
+
+                            var data = crdfor_@(grid_id)();
+                            data.PageSize = $("#@grid_id .page-item .page-link").text();
+                            rldGd_@(grid_id)(data);
+                        });
+                </text>
+
+            }
+            if (Model.GridRows.Count(m => m.IsDomain) > 0)
+            {
+                List<GridRow> cols = Model.GridRows.Where((m => m.IsDomain)).ToList();
+                foreach (GridRow col in cols)
+                {
+                    string filterId = grid_id + "_filter_" + col.DbName;
+
+                    //c#
+                    <text>//js
+                        window["@filterId"].on("change",
+                            function() {
+                                reloadGrid_@(grid_id)();
+                            });
+                    </text>
+                }
+            }
+
+        }
+    }
+
+</script>
+
+ 

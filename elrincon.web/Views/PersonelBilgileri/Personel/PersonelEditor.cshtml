@@ -1,0 +1,342 @@
+﻿
+@model elrincon.web.Models.PersonelBilgileri.Personel.PersonelEditorModel
+@{
+    ViewBag.Title = "Personel Ekle ";
+    Layout = "~/Views/_Modal.cshtml";
+}
+<style>
+    /*  .not_change_div {
+        pointer-events: none;
+        display: inline-block;
+        background-color: #F0F0F0;
+        border-radius: 6px;
+        border: 1px solid #EEE;
+    }*/
+    /*
+    .open-modal .window {
+        max-width: 96% !important;
+    }*/
+
+</style>
+<div class="row el_row">
+<div class="cell-3"></div>
+<div class="cell-3">
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Adı :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", @Model.InputAdiModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Soyadı :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", @Model.InputSoyadiModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                TC :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", @Model.InputTcModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Tel. No1 :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", @Model.InputTelNo1Model);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Tel. No2 :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", @Model.InputTelNo2Model);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                İşe Giriş Tarihi :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", @Model.InputIseGirisTarihiModel);}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="cell-3">
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Kullanıcı Adı :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", @Model.InputKullaniciAdiModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Şifresi :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", @Model.InputSifresiModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Mail Adresi :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", @Model.InputMailAdresiModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Şubesi :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElSelect", @Model.SelectSubeModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Bölümü :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElSelect", @Model.SelectBolumModel);}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="cell-3"></div>
+
+<div class="cell-12">
+    <div class="row">
+        <div class="input-caption">
+            Adresi :
+        </div>
+        <div class="input-value">
+            @{Html.RenderPartial("ElInput", @Model.InputAdresiModel);}
+        </div>
+    </div>
+</div>
+<div class="row el_row">
+
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Muhasebe Maaş Gider Hesabı :
+            </div>
+            <div class="input-value search-selectparent">
+                @{Html.RenderPartial("ElSearchSelect", @Model.SelectMuhasebeMaasGiderHesabiModel);}
+            </div>
+        </div>
+    </div>
+
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Muhasebe Kodu :
+            </div>
+            <div class="input-value search-selectparent">
+                @{Html.RenderPartial("ElSearchSelect", @Model.SelectMuhasebeKoduModel);}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row el_row">
+
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Maaş Tipi :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElSelect", @Model.SelectMaasTipiModel);}
+            </div>
+        </div>
+    </div>
+
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Maaş Miktarı:
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", @Model.InputMaasMiktariModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Dövüz Kodu :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElSelect", @Model.SelectDovizKoduModel);}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cell-12">
+    <div class="row">
+        <div class="input-caption">
+            NOT :
+        </div>
+        <div class="input-value">
+            @{Html.RenderPartial("ElInput", @Model.InputAciklamaModel);}
+        </div>
+    </div>
+</div>
+<div class="cell-12 not_change_div" style="">
+    @*pointer-events: none;*@
+    <div class="row">
+        @{Html.RenderPartial("/Views/Shared/KardanYuzdelikOranlari.cshtml", @Model.ModelKardanOrani);}
+    </div>
+</div>
+
+<div class="cell" align="right">
+    <div class="row" style="width: fit-content;">
+        <button class="el-action-button save_personel_data"> Kaydet </button>
+    </div>
+</div>
+</div>
+
+<script>
+    var id_value = '@Model.Id';
+    $('.save_personel_data').on("click",
+        function () {
+            var modelSave = {};
+            var saveYuzdelikOraniModels = [];
+
+            $('.outoNewRowOnChange > .tr').each(function(index, tr) {
+                var currentRow=$(this);
+
+                var tip = currentRow.find(".td:eq(0) select:eq(0)").val();
+                var nsp1 = currentRow.find(".td:eq(1) input:eq(0)").val();
+                var nsp2 = currentRow.find(".td:eq(1) input:eq(1)").val();
+                var nsy = currentRow.find(".td:eq(1) input:eq(2)").val();
+
+                var ksp1 = currentRow.find(".td:eq(2) input:eq(0)").val();
+                var ksp2 = currentRow.find(".td:eq(2) input:eq(1)").val();
+                var ksy = currentRow.find(".td:eq(2) input:eq(2)").val();
+
+                var isp1 = currentRow.find(".td:eq(3) input:eq(0)").val();
+                var isp2 = currentRow.find(".td:eq(3) input:eq(1)").val();
+                var isy = currentRow.find(".td:eq(3) input:eq(2)").val();
+
+                var ydsp1 = currentRow.find(".td:eq(4) input:eq(0)").val();
+                var ydsp2 = currentRow.find(".td:eq(4) input:eq(1)").val();
+                var ydsy = currentRow.find(".td:eq(4) input:eq(2)").val();
+
+                var gcsp1 = currentRow.find(".td:eq(5) input:eq(0)").val();
+                var gcsp2 = currentRow.find(".td:eq(5) input:eq(1)").val();
+                var gcsy = currentRow.find(".td:eq(5) input:eq(2)").val();
+
+                var muhasebekodu = currentRow.find(".td:eq(6) button:eq(0)").data("code");
+
+
+                saveYuzdelikOraniModels.push({
+                    UrunTipi: tip,
+                    YuzdeTip:1,//yuzdelik personel
+                    NarmalSatisParite1 : nsp1,
+                    NarmalSatisParite2 : nsp2,
+                    NarmalSatisYuzdeligi : nsy,
+                    KapiSatisParite1 : ksp1,
+                    KapiSatisParite2 : ksp2,
+                    KapiSatisYuzdeligi : ksy,
+                    InternetSatisParite1 : isp1,
+                    InternetSatisParite2 : isp2,
+                    InternetSatisYuzdeligi : isy,
+                    YurtDisiSatisParite1 : ydsp1,
+                    YurtDisiSatisParite2 : ydsp2,
+                    YurtDisiSatisYuzdeligi : ydsy,
+                    GenelCiroSatisParite1 : gcsp1,
+                    GenelCiroSatisParite2 : gcsp2,
+                    GenelCiroSatisYuzdeligi: gcsy,
+                    MuhasebeKodu : muhasebekodu
+                    });
+            });
+            //console.log(saveYuzdelikOraniModels.toString());
+
+            modelSave.Id = id_value;
+            modelSave.Ad = $('#personel_editor_input_adi').val();
+            modelSave.Soyad = $('#personel_editor_input_soyadi').val();
+            modelSave.TcNo = $('#personel_editor_input_tc_no').val();
+            modelSave.KullaniciAdi = $('#personel_editor_input_kullanici_adi').val();
+            modelSave.Sifre = $('#personel_editor_input_sifre').val();
+            modelSave.TelNo1 = $('#personel_editor_input_tel_no1').val();
+            modelSave.TelNo2 = $('#personel_editor_input_tel_no2').val();
+            modelSave.IseGirisTarihi = $('#personel_editor_input_giris_tarihi').val();
+            modelSave.MailAdresi = $('#personel_editor_input_mail_adres').val();
+            modelSave.Subesi = $('#personel_editor_model_select_sube_id').val();
+            modelSave.Bolumu = $('#personel_editor_model_select_bolum_id').val();
+            modelSave.Adres = $('#personel_editor_input_adres').val();
+            modelSave.MuhasebeMaasGiderHesabi = $('#personel_editor_input_muhasebe_gider_hesabi_btn').data("code");
+            modelSave.MuhasebeKodu = $('#personel_editor_input_muhasebe_kodu_btn').data("code");
+            modelSave.MaasTipi = $('#personel_editor_model_select_maas_tipi').val();
+            modelSave.MaasMiktari = $('#personel_editor_input_maas_miktari').val();
+            modelSave.DovizKodu = $('#personel_editor_model_select_maas_doviz_kodu').val();
+            modelSave.Aciklama = $('#personel_editor_input_aciklama').val();
+            modelSave.SaveYuzdelikOraniModels = saveYuzdelikOraniModels;
+
+            console.log(modelSave);
+
+            var dataSend = JSON.stringify({ 'model': modelSave });
+            //console.log({dataSend});
+
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: '@Url.Action("SaveOrUpdate","PersonelEditor")',
+                data: dataSend,
+                beforeSend: function () {
+                    $("#loading").css("display", "block");
+                },
+                TYPE: 'POST',
+                success: function (result) {
+
+                    if (result.result == "ok") {
+                        hideModal();
+                        reloadGrid_personel_liste_grid_id();
+
+                        ShowAlertMessage("Başarılı", "İşlem başarıyla gerçekleşti","success");
+
+                    } else {
+                        ShowAlertMessage("Hata", result.message, "alert");
+                    }
+                }
+            }).done(function () {
+                $("#loading").css("display", "none");
+            });
+        });
+</script>

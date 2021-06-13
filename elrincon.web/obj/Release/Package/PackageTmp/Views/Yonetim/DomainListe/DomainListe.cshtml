@@ -1,0 +1,120 @@
+﻿@model elrincon.web.Models.Yonetim.DomainListeModel
+
+@{
+    ViewBag.Title = "Domain liste";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<style>
+    .domain_liste .grid {
+        margin-left: 0px;
+    }
+</style>
+<div class="body-content">
+    <div class="row el_row" style="margin-left: 6px">
+        <button class="button el-action-button ekle_button" id="showmodalID">Domain İsmi Ekle </button>
+    </div>
+
+    <div data-role="navview" data-expanded="fs" data-compact="false" data-role-navview="true" class="navview navview-expand-lg compacted js-compact">
+        <!--<div class="navview-pane importantWith">
+            <button class="pull-button">
+                <span class="default-icon-menu"></span>
+                <span id="pull-icon-label"> <span style="margin-left: 25px">Sorgula</span>  </span>
+            </button>-->
+
+            @*<div class="query-inputs">
+                    @{Html.RenderPartial("~/Views/yonetim/DomainListe/DomainListeQueryEditor.cshtml", @Model.PersonelEditorModel);}
+                </div>*@
+
+            <!--<div class="query-button" style="" align="right">
+                <button class="el-action-button btn_personel_bilgileri_sorgula"> Sorgula</button>
+            </div>
+        </div>-->
+        <div class="domain_liste" style="height: 90%;width: 100%">
+            @{Html.RenderPartial("~/Views/Shared/elGrid/ElDataGrid.cshtml", Model.GridModel);}
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/Scripts/v4-metro.min.js"></script>
+<script>
+
+    @*------open editor ---------------------*@
+    function edit_domain_listesi_cliced(id) {
+        OpenEditormodal(id);
+    }
+
+    $("#showmodalID").on("click", function () {
+        OpenEditormodal(0);
+    });
+
+    function OpenEditormodal(id) {
+        $.ajax({
+            url: '@Url.Action("Index","DomainEditor")',
+            cash: false,
+            data: {
+                id
+            },
+            beforeSend: function () {
+                $("#loading").css("display", "block");
+            },
+            TYPE: 'GET',
+            success: function(result) {
+                openModal(result);
+            }
+        }).done(function () {
+            $("#loading").css("display", "none");
+        });
+    }
+
+    @*delete row il liste*@
+
+    function delete_domain_listesi_cliced(id) {
+        Metro.dialog.create({
+            title: "Satır Sil",
+            content: "<div>Kaydı silmek istediğinizden emin isiniz..</div>",
+            actions: [
+                {
+                    caption: "Evet",
+                    cls: "js-dialog-close alert",
+                    onclick: function() {
+                        DeleteRecord(id);
+                    }
+                },
+                {
+                    caption: "Hayır",
+                    cls: "js-dialog-close",
+                    onclick: function(){
+                    }
+                }
+            ]
+        });
+
+    }
+
+    function DeleteRecord(id) {
+        $.ajax({
+            url: '@Url.Action("DeleteRow","DomainListe")',
+            cash: false,
+            data: {
+                id
+            },
+            TYPE: 'GET',
+            success: function (result) {
+
+                if (result.result == "ok") {
+                    reloadGrid_domain_liste_grid_id();
+
+                    ShowAlertMessage("Başarılı", "İşlem başarıyla gerçekleşti","success");
+
+                } else {
+                    ShowAlertMessage("Hata", result.message, "alert");
+                }
+            }
+        });
+    }
+     
+
+</script>

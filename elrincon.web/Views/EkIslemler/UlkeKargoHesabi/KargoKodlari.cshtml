@@ -1,0 +1,131 @@
+﻿@using elrincon.web.Models.EkIslemler.UlkeKargoHesabi
+@model  List<elrincon.web.Models.EkIslemler.UlkeKargoHesabi.KargoKodlariModel>
+
+@{
+    ViewBag.Title = ViewBag.Title; 
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<style>
+    .open-modal .window {
+        height: 600px !important;
+        width: 800px !important;
+    }
+    #dovizTable td{
+        border: 1px solid;
+    }
+    .input-value {
+        width: calc(100% - 240px);
+    }
+    .cell { 
+        padding: 2px;
+    }
+</style>
+
+<div class="cell" style="height:100% ;display: table;">
+   
+    <div class="cell" style="text-align: center; font-weight: bold">
+        Ülke Kargo Kodları
+    </div>
+
+    <div class="cell parentkorgokodlari" style="height: calc(100% - 66px);overflow-y: auto;overflow-x: hidden;">
+        <div class="row">
+            <div class="cell-6"> Ülke Adı </div>
+            <div class="cell-2"> DHL Kodu</div>
+            <div class="cell-2"> UPS Kodu </div>
+            <div class="cell-2"> TNT Kodu</div>
+        </div>
+        @foreach (KargoKodlariModel md in Model)
+        {
+            <div class="row rowkargokodlari" data-code ="@md.id">
+                <div class="cell-6">
+                    @{Html.RenderPartial("ElInput", md.InputUlkeAdiModel);}
+                </div>
+                <div class="cell-2">
+                    @{ Html.RenderPartial("ElInput", md.InputDHLModel); }
+                </div>
+                <div class="cell-2">
+                    @{ Html.RenderPartial("ElInput", md.InputUPSModel);}
+                </div>
+                <div class="cell-2">
+                    @{ Html.RenderPartial("ElInput", md.InputTNTModel);}
+                </div>
+            </div>
+        }
+
+    </div>  
+
+    <div class="row" align="right">
+        <div class="cell" style="margin-right: 25px;">
+            <button class="el-action-button" style="margin: auto !important" onclick="save_kargo_kod()"> Kaydet </button>
+        </div>
+    </div>
+     
+</div>
+
+<script>
+    function save_kargo_kod(id) {
+
+        var dataKod = [];
+        $('.parentkorgokodlari > .rowkargokodlari').each(function () {
+
+            var currentRow = $(this);
+
+            var id = $(this).data("code");
+            var ad = currentRow.find("input:eq(0)").val();
+            var dhl = currentRow.find("input:eq(1)").val();
+            var ups = currentRow.find("input:eq(2)").val();
+            var tnt = currentRow.find("input:eq(3)").val();
+
+            dataKod.push({
+                id : id,
+                adi :ad,
+                dhl :dhl,
+                ups :ups,
+                tnt: tnt
+            });
+        });
+
+        console.log({ dataKod });
+        var dataSend = JSON.stringify({ 'saveModels': dataKod });
+       // var json = JSON.stringify(dataKod);
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            url: '@Url.Action("SaveOrUpdate","KargoKodlari")',
+            data: dataSend,
+            cash: false,
+            type: 'POST',
+            beforeSend: function () {
+                $("#loading").css("display", "block");
+            },  
+
+            success: function(result) {
+                if (result.result == "ok") {
+                    //hideModal();
+                    //reloadGrid_kargo_kod_liste_grid_id();
+                    ShowAlertMessage("Başarılı", "İşlem başarıyla gerçekleşti", "success");
+                } else {
+                    ShowAlertMessage("Hata", result.message, "alert");
+                }
+            }
+        }).done(function () {
+            $("#loading").css("display", "none");
+        });
+    }
+
+    function sorgula_kargo_kod() {
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Index","KargoKodlari")',
+            data: {
+                queryDate: $("#input_query_date").val()
+            }, 
+            success: function (result) {
+                    $(".parentclass").html(result);
+            }
+        });
+    }
+
+</script>

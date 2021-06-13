@@ -1,0 +1,158 @@
+﻿@using elrincon.web.Models.SharedModel
+@model List<elrincon.web.Models.SharedModel.KardanYuzdelikOranlariModel>
+
+<style>
+    .th {
+        text-align-last: center !important;
+    }
+
+    .tdparite div {
+        width: 21% !important;
+        display: inline-table;
+    }
+
+    .table {
+        font-size: 12px;
+    }
+
+    .drop-container ul {
+        margin: 0px 0 0 -43px;
+        border: 1px solid;
+        border-color: #cccccc;
+        max-height: 150px !important;
+        overflow: auto;
+    }
+
+    .drop-container {
+        z-index: 50;
+        position: inherit;
+    }
+</style>
+
+
+<div class="table">
+    <div class="thead">
+        <div class="th"></div>
+        <div class="th">
+            Normal Satış(Komisyon %)
+        </div>
+        <div class="th">
+            Kapı Satışı(Komisyon %)
+        </div>
+        <div class="th">
+            İnternet Satış(Komisyon %)
+        </div>
+        <div class="th">
+            Yurtdışı Ziyaret(Komisyon %)
+        </div>
+        <div class="th">
+            Genel Cirodan(Komisyon %)
+        </div>
+        <div class="th" style="text-align: center">
+            M.KOMİSYON GİDER HESABI
+        </div>
+        <div class="th">
+        </div>
+    </div>
+    <div class="tbody outoNewRowOnChange">
+        @{
+            foreach (KardanYuzdelikOranlariModel yuzdelikOranlariModel in Model)
+            {
+                <div class="tr">
+                    <div class="td">
+                        @{Html.RenderPartial("ElSelect", yuzdelikOranlariModel.UrunTipi);}
+                    </div>
+                    <div class="td tdparite">
+                        @{Html.RenderPartial("ElInput", yuzdelikOranlariModel.NarmalSatisParite1);}
+                        -  @{Html.RenderPartial("ElInput", yuzdelikOranlariModel.NarmalSatisParite2);}
+                        parite de
+                        @{Html.RenderPartial("ElInput", yuzdelikOranlariModel.NarmalSatisYuzdeligi);}
+                    </div>
+                    <div class="td tdparite">
+                        @{Html.RenderPartial("ElInput", yuzdelikOranlariModel.KapiSatisParite1);}
+                        -  @{Html.RenderPartial("ElInput", yuzdelikOranlariModel.KapiSatisParite2);}
+                        parite de
+                        @{Html.RenderPartial("ElInput", yuzdelikOranlariModel.KapiSatisYuzdeligi);}
+                    </div>
+                    <div class="td tdparite">
+                        @{Html.RenderPartial("ElInput", yuzdelikOranlariModel.InternetSatisParite1);}
+                        -  @{Html.RenderPartial("ElInput", yuzdelikOranlariModel.InternetSatisParite2);}
+                        parite de
+                        @{Html.RenderPartial("ElInput", yuzdelikOranlariModel.InternetSatisYuzdeligi);}
+                    </div>
+                    <div class="td tdparite">
+                        @{Html.RenderPartial("ElInput", yuzdelikOranlariModel.YurtDisiSatisParite1);}
+                        -  @{Html.RenderPartial("ElInput", yuzdelikOranlariModel.YurtDisiSatisParite2);}
+                        parite de
+                        @{Html.RenderPartial("ElInput", yuzdelikOranlariModel.YurtDisiSatisYuzdeligi);}
+                    </div>
+                    <div class="td tdparite">
+                        @{Html.RenderPartial("ElInput", yuzdelikOranlariModel.GenelCiroSatisParite1);}
+                        -  @{Html.RenderPartial("ElInput", yuzdelikOranlariModel.GenelCiroSatisParite2);}
+                        parite de
+                        @{Html.RenderPartial("ElInput", yuzdelikOranlariModel.GenelCiroSatisYuzdeligi);}
+                    </div>
+                    <div class="td tdpariteMUHASEBE search-selectparent" style="margin: 0; padding: 0; ">
+                        @{Html.RenderPartial("ElSearchSelect", yuzdelikOranlariModel.MuhasebeGelirKodu);}
+                    </div>
+                    <div class="td tdparite" style="margin: 0; padding: 0">
+                        <img src="~/Content/images/delete.png" height="21" class="delete_yuzdelik_orani" />
+                    </div>
+                </div>
+            }
+
+        }
+
+    </div>
+</div>
+<div class="tbody outoNewRowOnChange " style="display: none">
+    @{
+            <div class="tr">
+                <div class="td">
+                    @{Html.RenderPartial("ElSelect", Model.Last().UrunTipi);}
+                </div>
+                <div class="td tdparite">
+                    @{Html.RenderPartial("ElInput", Model.Last().NarmalSatisParite1);}
+                    -  @{Html.RenderPartial("ElInput", Model.Last().NarmalSatisParite2);}
+                    parite de
+                    @{Html.RenderPartial("ElInput", Model.Last().NarmalSatisYuzdeligi);}
+                </div>
+                <div class="td tdparite">
+                    @{Html.RenderPartial("ElInput", Model.Last().KapiSatisParite1);}
+                    -  @{Html.RenderPartial("ElInput", Model.Last().KapiSatisParite2);}
+                    parite de
+                    @{Html.RenderPartial("ElInput", Model.Last().KapiSatisYuzdeligi);}
+                </div>
+                <div class="td tdparite">
+                    @{Html.RenderPartial("ElInput", Model.Last().InternetSatisParite1);}
+                    -  @{Html.RenderPartial("ElInput", Model.Last().InternetSatisParite2);}
+                    parite de
+                    @{Html.RenderPartial("ElInput", Model.Last().InternetSatisYuzdeligi);}
+                </div>
+                <div class="td tdparite">
+                    @{Html.RenderPartial("ElInput", Model.Last().YurtDisiSatisParite1);}
+                    -  @{Html.RenderPartial("ElInput", Model.Last().YurtDisiSatisParite2);}
+                    parite de
+                    @{Html.RenderPartial("ElInput", Model.Last().YurtDisiSatisYuzdeligi);}
+                </div>
+                <div class="td tdparite">
+                    @{Html.RenderPartial("ElInput", Model.Last().GenelCiroSatisParite1);}
+                    -  @{Html.RenderPartial("ElInput", Model.Last().GenelCiroSatisParite2);}
+                    parite de
+                    @{Html.RenderPartial("ElInput", Model.Last().GenelCiroSatisYuzdeligi);}
+                </div>
+                <div class="td tdpariteMUHASEBE search-selectparent" style="margin: 0; padding: 0; ">
+                    @{Html.RenderPartial("ElSearchSelect", Model.Last().MuhasebeGelirKodu);}
+                </div>
+                <div class="td tdparite" style="margin: 0; padding: 0">
+                    <img src="~/Content/images/delete.png" height="21" class="delete_yuzdelik_orani" />
+                </div>
+            </div>
+
+    }
+
+</div>
+<script>
+
+</script>
+

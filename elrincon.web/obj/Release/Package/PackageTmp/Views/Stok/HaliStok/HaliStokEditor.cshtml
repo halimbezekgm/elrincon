@@ -1,0 +1,518 @@
+﻿
+@model elrincon.web.Models.Stok.HaliStok.HaliStokEditorModel
+@{
+    ViewBag.Title = "Halı/Kilim Stok Ekle/Güncelle ";
+    Layout = "~/Views/_Modal.cshtml";
+}
+<style>
+    .eski_bilgiler {
+        pointer-events: none;
+        display: inline-block;
+        background-color: #a9a9a9;/*#a9d4e6#F0F0F0*/
+        border-radius: 6px;
+        border: 1px solid #EEE;
+    }
+
+</style>
+<div class="row el_row">
+    <div class="cell-6">
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Tarih :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputTarihModel);}
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="cell-6">
+        <div class="cell">
+            <div class="cell">
+                <div class="row">
+                    <div class="input-caption">
+                        Şubesi :
+                    </div>
+                    <div class="input-value">
+                        @{Html.RenderPartial("ElSelect", @Model.SelectSubeModel);}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cell-6">
+        <div class="row">
+            <div class="input-caption">
+                Stok No :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", @Model.InputStokNoModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell-6">
+        <div class="row">
+            <div class="input-caption">
+                Ana Grubu :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElSelect", @Model.SelectAnaGrubu);}
+            </div>
+        </div>
+    </div>
+    <div class="row el_row">
+
+
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Ürün Çeşidi :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.SelectUrunCesidiModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Menşei :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.SelectMenseiModel);}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row el_row">
+
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Üretim :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.SelectUretimTipiModel);}
+                </div>
+            </div>
+        </div>
+
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Material :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.SelectMaterialModel);}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row el_row">
+
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Ölçü :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.SelectOlcuTipModel);}
+                </div>
+            </div>
+        </div>
+
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Düğüm :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.SelectDugumTipModel);}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row el_row">
+
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Ölçüler /  Boy :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputOlcuBoyModel);}
+                </div>
+            </div>
+        </div>
+
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    En :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputOlcuEnModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    mt2 :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputOlcuMt2Model);}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row el_row">
+
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    İnç Ölçüleri /  Boy :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputIncOlcuBoyModel);}
+                </div>
+            </div>
+        </div>
+
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    En :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputIncOlcuEnModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    mt2 :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputIncOlcuMt2Model);}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row el_row">
+
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Düğüm Sayısı :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.InputDugumSayisiModel);}
+                </div>
+            </div>
+        </div>
+
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Renk :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.InputRenkModel);}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row el_row">
+
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Satıcı :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.SelectSaticiModel);}
+                </div>
+            </div>
+        </div>
+
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Firma Kodu :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputFirmaKduModel);}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row el_row">
+
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Konsinye/Pesin :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.SelectKonsinyePesinModel);}
+                </div>
+            </div>
+        </div>
+
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Toplam Maliyet :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputToplamMaliyetModel);}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row el_row">
+
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption" style="color: red">
+                    Birim Fiyat :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputbirimFiyatModel);}
+                </div>
+            </div>
+        </div>
+
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Etiket Çarpanı :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputEtiketCarpaniModel);}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row el_row">
+
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption" style="color: red">
+                    Adet Fiyatı :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputAdetFiyatModel);}
+                </div>
+            </div>
+        </div>
+
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Etiket Fiyatı :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputEtiketFiyatModel);}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row el_row">
+
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Tamir/Yıkama:
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputTamirYikamaModel);}
+                </div>
+            </div>
+        </div>
+
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Satış Çarpanı :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputSatisCarpaniModel);}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row el_row">
+
+        <div class="cell">
+            <div class="row">
+
+            </div>
+        </div>
+
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption" style="color: red">
+                    Satış Fiyatı :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputSatisFiyatiModel);}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cell-12">
+        <div class="row">
+            <div class="input-caption">
+                NOT :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", @Model.InputAciklamaModel);}
+            </div>
+        </div>
+    </div>
+    
+<div class="row el_row">
+     
+
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Konsinye Verilen :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElSelect", @Model.SelectKonsinyeVerilen);}
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="cell" align="right">
+        <div class="row" style="width: fit-content;">
+            <button class="el-action-button save_hali_stok_data"> Kaydet </button>
+        </div>
+    </div>
+</div>
+<script>
+    
+    $("#hali_editor_input_birim_fiyat").keyup(function () {
+        console.log("sdfds : " + $(this).val().length );
+        if ($(this).val().length > 0) {
+            $("#hali_editor_input_adet_fiyati").addClass('eski_bilgiler');
+        } else {
+            $("#hali_editor_input_adet_fiyati").removeClass('eski_bilgiler');
+        }
+    });
+    $("#hali_editor_input_adet_fiyati").keyup(function () {
+        if ($(this).val().length > 0) {
+            $("#hali_editor_input_birim_fiyat").addClass('eski_bilgiler');
+        } else {
+            $("#hali_editor_input_birim_fiyat").removeClass('eski_bilgiler');
+        }
+    });
+
+    $("#hali_editor_input_olcu_boy").keyup(function () {
+        CalculateMethod();
+    });
+    $("#hali_editor_input_olcu_en").keyup(function () {
+        CalculateMethod();
+    });
+
+    function CalculateMethod() {
+
+        var boy = $("#hali_editor_input_olcu_boy").val().replace(",", ".");;
+        var en = $("#hali_editor_input_olcu_en").val().replace(",", ".");
+
+        var incEn = en * 39.370;
+        var incBoy = boy * 39.370;
+
+        var val = GetMt2(en, boy);
+        var incKare = GetIncKare(val);
+
+        $("#hali_editor_input_olcu_mt2").val(val);
+        $("#hali_editor_input_olcu_inc_mt2").val(incKare);
+
+        $("#hali_editor_input_inc_olcu_boy").val(incBoy);
+        $("#hali_editor_input_olcu_inc_en").val(incEn);
+    }
+
+    function  GetMt2(en, boy) {
+        return en * boy;
+    }
+    function GetIncKare(val) {
+        return val * 1550;
+    }
+
+    //save 
+    var id_value = '@Model.Id';
+    $('.save_hali_stok_data').on("click",
+        function () {
+            var modelSave = {};
+            modelSave.Id = id_value;
+            modelSave.Tarih = $("#hali_editor_input_tarih").val();
+            modelSave.Sube = $("#hali_editor_model_select_sube_id").val();
+            modelSave.StokNo = $("#hali_editor_input_stok").val();
+            modelSave.AnaGrubu = $("#hali_editor_model_select_ana_grubu").val();
+            modelSave.UrunCesidi = $("#hali_editor_model_select_urun_cesidi").val();
+            modelSave.Mensei = $("#hali_editor_model_select_mensei").val();
+            modelSave.UretimTipi = $("#hali_editor_model_select_uretim_tip").val();
+            modelSave.Material = $("#hali_editor_model_select_materyal").val();
+            modelSave.OlcuTip = $("#hali_editor_model_select_olcu_tip").val();
+            modelSave.DugumTip = $("#hali_editor_model_select_olcu_dugum").val();
+            modelSave.OlcuBoy = $("#hali_editor_input_olcu_boy").val();
+            modelSave.OlcuEn = $("#hali_editor_input_olcu_en").val();
+            modelSave.OlcuMt2 = $("#hali_editor_input_olcu_mt2").val();
+            modelSave.IncOlcuBoy = $("#hali_editor_input_inc_olcu_boy").val();
+            modelSave.IncOlcuEn = $("#hali_editor_input_olcu_inc_en").val();
+            modelSave.IncOlcuMt2 = $("#hali_editor_input_olcu_inc_mt2").val();
+            modelSave.DugumSayisi = $("#hali_editor_input_dugum_sayisi").val();
+            modelSave.Renk = $("#hali_editor_input_renk").val();
+            modelSave.Satici = $("#hali_editor_model_select_satici").val();
+            modelSave.FirmaKdu = $("#hali_editor_input_firma_kodu").val();
+            modelSave.KonsinyePesin = $("#hali_editor_model_select_konsinye").val();
+            modelSave.ToplamMaliyet = $("#hali_editor_input_toplam_maliyet").val();
+            modelSave.birimFiyat = $("#hali_editor_input_birim_fiyat").val();
+            modelSave.EtiketCarpani = $("#hali_editor_input_etiket_carpan").val();
+            modelSave.AdetFiyat = $("#hali_editor_input_adet_fiyati").val();
+            modelSave.EtiketFiyat = $("#hali_editor_input_etiket_fiyati").val();
+            modelSave.TamirYikama = $("#hali_editor_input_tamir_yikama").val();
+            modelSave.SatisCarpani = $("#hali_editor_input_satis_carpani").val();
+            modelSave.SatisFiyati = $("#hali_editor_input_satis_fiyati").val();
+            modelSave.Aciklama = $("#hali_editor_input_aciklama").val();
+            modelSave.KonsinyeVerilen = $("#hali_editor_model_select_konsinye_verilen").val();
+
+            console.log(modelSave);
+
+            var dataSend = JSON.stringify({ 'model': modelSave });
+            console.log({dataSend});
+
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: '@Url.Action("SaveOrUpdate","HaliStokEditor")',
+                data: dataSend,
+                TYPE: 'POST',
+                success: function (result) {
+
+                    if (result.result == "ok") {
+                        hideModal();
+                        reloadGrid_hali_stok_liste_grid_id();
+
+                        ShowAlertMessage("Başarılı", "İşlem başarıyla gerçekleşti","success");
+
+                    } else {
+                        ShowAlertMessage("Hata", result.message, "alert");
+                    }
+                }
+            });
+        });
+</script>

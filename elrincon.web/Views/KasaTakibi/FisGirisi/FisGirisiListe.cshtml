@@ -1,0 +1,146 @@
+﻿@model elrincon.web.Models.KasaTakibi.FisGirisi.FisGirisiListeModel
+
+@{
+    ViewBag.Title = "EmptyView";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<div class="body-content">
+    <div class="row el_row" style="margin-left: 6px">
+        <button class="button el-action-button ekle_button" id="showmodalID">Fiş Ekle </button>
+    </div>
+
+    <div data-role="navview" data-expanded="fs" data-compact="false" data-role-navview="true" class="navview navview-expand-lg compacted js-compact">
+        <div class="navview-pane importantWith">
+            <button class="pull-button">
+                <span class="default-icon-menu"></span>
+                <span id="pull-icon-label"> <span style="margin-left: 25px">Sorgula</span>  </span>
+            </button>
+
+            <div class="query-inputs">
+                @{Html.RenderPartial("~/Views/KasaTakibi/FisGirisi/QueryEditor.cshtml", @Model.FisGirisiEditorModel);}
+            </div>
+
+            <div class="query-button" style="" align="right">
+                <button class="el-action-button btn_fis_girisi_bilgileri_sorgula"> Sorgula</button>
+            </div>
+        </div>
+        <div style="height: 90%;width: 100%">
+            @{Html.RenderPartial("~/Views/Shared/elGrid/ElDataGrid.cshtml", Model.GridModel);}
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    @*------open editor ---------------------*@
+    function edit_fis_girisi_listesi_cliced(id) {
+        OpenEditormodal(id);
+    }
+
+    $("#showmodalID").on("click", function () {
+        OpenEditormodal(0);
+    });
+
+    function OpenEditormodal(id) {
+        $.ajax({
+            url: '@Url.Action("Index", "FisGirisiEditor")',
+            cash: false,
+            data: {
+                id
+            },
+            beforeSend: function () {
+                $("#loading").css("display", "block");
+            },
+            TYPE: 'GET',
+            success: function(result) {
+                openModal(result);
+            }
+        }).done(function () {
+            $("#loading").css("display", "none");
+        });
+    }
+
+    @*delete row*@
+
+    function delete_fis_girisi_listesi_cliced(id) {
+        Metro.dialog.create({
+            title: "Satır Sil",
+            content: "<div>Kaydı silmek istediğinizden emin isiniz..</div>",
+            actions: [
+                {
+                    caption: "Evet",
+                    cls: "js-dialog-close alert",
+                    onclick: function() {
+                        DeleteRecord(id);
+                    }
+                },
+                {
+                    caption: "Hayır",
+                    cls: "js-dialog-close",
+                    onclick: function(){
+                    }
+                }
+            ]
+        });
+
+    }
+
+    function DeleteRecord(id) {
+        $.ajax({
+            url: '@Url.Action("DeleteRow", "FisGirisiListe")',
+            cash: false,
+            data: {
+                id
+            },
+            TYPE: 'GET',
+            success: function (result) {
+
+                if (result.result == "ok") {
+                    reloadGrid_fis_girisi_liste_grid_id();
+
+                    ShowAlertMessage("Başarılı", "İşlem başarıyla gerçekleşti","success");
+
+                } else {
+                    ShowAlertMessage("Hata", result.message, "alert");
+                }
+            }
+        });
+    }
+
+    $(".btn_fis_girisi_bilgileri_sorgula").on("click", function () {
+        var parameter = crdfor_@(Model.GridModel.GridId)();
+
+        parameter.CustomProperties.adi = $("#fis_girisi_editor_input_adi_for_query").val();
+        parameter.CustomProperties.soyadi = $("#fis_girisi_editor_input_soyadi_for_query").val();
+        parameter.CustomProperties.bolumu = $("#fis_girisi_editor_model_select_bolum_id_for_query").val();
+        parameter.CustomProperties.subesi = $("#fis_girisi_editor_model_select_sube_id_for_query").val();
+        parameter.CustomProperties.tc_no = $("#fis_girisi_editor_input_tc_no_for_query").val();
+        parameter.CustomProperties.tel_no1 = $("#fis_girisi_editor_input_tel_no1_for_query").val();
+        parameter.CustomProperties.maas_miktari = $("#fis_girisi_editor_input_maas_miktari_for_query").val();
+        parameter.CustomProperties.maas_tipi = $("#fis_girisi_editor_model_select_maas_tipi_for_query").val();
+
+        var data = {
+            parameter:parameter
+        }
+
+        $.ajax({
+            url: '@Url.Action("GetGridBody", "FisGirisiListe")',
+            cash: false,
+            type: "POST",
+            data: data,
+            success: function (result) {
+
+                if (result != "") {
+                    $("#grid-body_fis_girisi_liste_grid_id").html(result);
+                }
+
+                else {
+                    ShowAlertMessage("Hata", result.message, "alert");
+                }
+            }
+        });
+    });
+
+</script>

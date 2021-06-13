@@ -1,0 +1,103 @@
+﻿@model elrincon.web.Models.EkIslemler.UlkeKargoHesabi.KargoHesabiModel
+
+@{
+    ViewBag.Title = ViewBag.Title;
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<style>
+    .open-modal .window {
+        height: 600px !important;
+        width: 800px !important;
+    }
+    #dovizTable td{
+        border: 1px solid;
+    } 
+    .cell { 
+        padding: 2px;
+    }
+</style>
+
+<div class="cell-12 parentclass" style="">
+
+    <div class="cell" style="margin-top: 20px">
+        <div class="row">
+            <div class="input-caption">
+                Ülke :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElSelect", Model.Ulkeler);}
+            </div>
+        </div>
+    </div>
+    <div class="cell" style="margin-top: 20px">
+        <div class="row">
+            <div class="input-caption">
+                Kargo Firması :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElSelect", Model.KargoFirmalari);}
+            </div>
+        </div>
+    </div>
+    <div class="cell" style="margin-top: 20px">
+        <div class="row">
+            <div class="input-caption">
+                Ağırlık(kg) :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", Model.Miktar);}
+            </div>
+        </div>
+    </div>
+   
+
+    <div class="cell" align="right" style="margin-top: 25px">
+        <div class="row">
+            <button class="el-action-button" style="margin: auto !important" onclick="kargo_hesapla()"> Hesapla </button>
+        </div>
+    </div>
+    <div class="cell" style="margin-top: 20px">
+        <div class="row">
+            <div class="input-caption">
+                Sonuç :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", Model.Sonuc);}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  
+    function kargo_hesapla() {
+
+        $.ajax({
+            url: '@Url.Action("KargoHesapla","KargoHesabi")',
+            data: {
+                ulkeId: $("#ulkeler_select_id").val(),
+                kargoFilma: $("#kargo_firma_id").val(),
+                agirlik: $("#miktar_input_id").val()
+            },
+            cash: false,
+            type: 'GET',
+            beforeSend: function () {
+                $("#loading").css("display", "block");
+            },  
+
+            success: function(result) {
+                if (result.result == "err") {
+                    ShowAlertMessage("Hata", result.message, "alert");
+                } else {
+                    //console.log(result.sonuc);
+                    agirlik: $("#sonuc_input_id").val(result.sonuc);
+
+                }
+            }
+        }).done(function () {
+            $("#loading").css("display", "none");
+        }); 
+    }
+
+</script>

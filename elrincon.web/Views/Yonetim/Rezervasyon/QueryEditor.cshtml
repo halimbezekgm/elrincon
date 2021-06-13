@@ -1,0 +1,55 @@
+﻿@model elrincon.web.Models.Yonetim.Rezervasyon.RezervasyonEditorModel
+
+
+<div class="cell">
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Rezervasyon No :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputRezeryonNoModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Hanutcu :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.Hanutcu1Model);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Rehber :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.Rehber1Model);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                   Servis :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.InputServisPersonelModel);}
+                </div>
+            </div>
+        </div> 
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Şubesi :
+                </div>
+                <div class="input-value">
+                    @{ Html.RenderPartial("ElSelect", @Model.InputUlkesiModel);}
+                </div>
+            </div>
+        </div> 
+</div> 

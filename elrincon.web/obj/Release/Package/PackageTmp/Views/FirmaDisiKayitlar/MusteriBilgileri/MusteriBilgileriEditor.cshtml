@@ -1,0 +1,213 @@
+﻿
+@model elrincon.web.Models.FirmaDisiKayitlar.MusteriBilgileri.MusteriBilgileriEditorModel
+@{
+    ViewBag.Title = "Müsteri";
+    Layout = "~/Views/_Modal.cshtml";
+}
+<style>
+  /*  .not_change_div {
+        pointer-events: none;
+        display: inline-block;
+        background-color: #F0F0F0;
+        border-radius: 6px;
+        border: 1px solid #EEE;
+    }*/
+
+    .open-modal .window {
+        max-width: 65% !important; 
+    }
+
+    #rezervasyon_editor_input_aciklama {
+        height: 180px !important;
+    }
+
+</style>
+<div class="row el_row" style="margin-top: 30px">
+    <div class="cell-12" align="center">
+        <h6>Müşteri Ekle</h6>
+    </div>
+    <div class="cell-6">
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Ad :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputAdModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Soyad :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputSoyadModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Cep Tel :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputTelefonCepModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Tel :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputTelefonModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    E-Mail :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputEmailModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                   Fax Numarası :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputFaxModel);}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cell-6">
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Şehir:
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputSehirModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Eyalet:
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputEyaletModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Ülkesi :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.SelectUlkesiModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Posta Kodu :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputPostaKoduModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Vergi Numarası :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputVergiNoModel);}
+                </div>
+            </div>
+        </div>
+        
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Tax Office :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputTaxOfficeModel);}
+                </div>
+            </div>
+        </div>
+    </div>
+     
+    <div class="cell-12">
+        <div class="row">
+            <div class="input-caption">
+                Adres :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", @Model.InputAdresModel);}
+            </div>
+        </div>
+    </div>
+     
+    <div class="cell" align="right">
+        <div class="row" style="width: fit-content;">
+            <button class="el-action-button save_personel_data"> Kaydet </button>
+        </div>
+    </div>
+</div>
+<script>
+    var id_value = '@Model.Id';
+    $('.save_personel_data').on("click",
+        function () {
+            
+            var dataSend = {
+                Id: id_value,
+                InputSehirModel: $("#MusteriBilgileri_editor_input_inputSehirModel").val(),
+                InputAdModel: $("#MusteriBilgileri_editor_input_inputAdModel").val(),
+                InputSoyadModel: $("#MusteriBilgileri_editor_input_inputSoyadModel").val(),
+                InputEyaletModel: $("#MusteriBilgileri_editor_input_inputEyaletModel").val(),
+                InputPostaKoduModel: $("#MusteriBilgileri_editor_input_inputPostaKoduModel").val(),
+                InputVergiNoModel: $("#MusteriBilgileri_editor_input_inputVergiNoModel").val(),
+                InputTaxOfficeModel: $("#MusteriBilgileri_editor_input_inputTaxOfficeModel").val(),
+                InputTelefonModel: $("#MusteriBilgileri_editor_input_inputTelefonModel").val(),
+                InputTelefonCepModel: $("#MusteriBilgileri_editor_input_inputTelefonCepModel").val(),
+                InputEmailModel: $("#MusteriBilgileri_editor_input_inputEmailModel").val(),
+                InputFaxModel: $("#MusteriBilgileri_editor_input_inputFaxModel").val(),
+                SelectUlkesiModel: $("#MusteriBilgileri_editor_select_selectUlkesiModel").val(),
+                InputAdresModel: $("#MusteriBilgileri_editor_input_inputAdresModel").val(),
+            }
+
+            $.ajax({ 
+                type: 'POST',
+                url: '@Url.Action("SaveOrUpdate","MusteriBilgileriEditor")',
+                data: dataSend,
+                TYPE: 'POST',
+                success: function (result) {
+
+                    if (result.result == "ok") {
+                        hideModal();
+                        reloadGrid_musteriBilgileri_liste_grid_id();
+
+                        ShowAlertMessage("Başarılı", "İşlem başarıyla gerçekleşti","success");
+
+                    } else {
+                        ShowAlertMessage("Hata", result.message, "alert");
+                    }
+                }
+            });
+        });
+</script>

@@ -1,0 +1,108 @@
+﻿@using System
+@using elrincon.web.Models.SharedModel 
+@model elrincon.web.Models.SharedModel.ElInputModel
+@{
+    string id = Model.Id;
+    string idS = !string.IsNullOrEmpty(id) ? id : "_" + Guid.NewGuid().ToString().Replace("-", "");
+    string placeHolder = Model.PlaceHolder;
+    int? maxlength = Model.Length;
+    string maxlengthS = !(maxlength == null) ? "maxlength=" + maxlength : "";
+    object value = Model.Value;
+    string disabledS = Model.Disabled ? "disabled" : "";
+    string readOnlyS = Model.ReadOnly ? "readonly" : "";
+    string title = value?.ToString() ?? "";
+    string parentDivStyle = string.IsNullOrEmpty(Model.ParentDivStyle) ? "height: 100%" : "height: 100%;" + Model.ParentDivStyle;
+    string prependStyle = string.IsNullOrEmpty(Model.Prepend) ? "" : "data-role=input data-prepend=" + Model.Prepend + " data-clear-button=false";
+    switch (Model.Format)
+    {
+        case InputDataType.Phone:
+            title = value?.ToString() ?? "";
+            break;
+        case InputDataType.Date:
+            if (!string.IsNullOrWhiteSpace(title))
+            {
+                DateTime val = DateTime.Parse(title);
+                title = string.Format("{0}/{1}/{2}", val.Day, val.Month, val.Year);
+            }
+            break;
+        case InputDataType.DateTime:
+            if (!string.IsNullOrWhiteSpace(title))
+            {
+                DateTime valDt = DateTime.Parse(title);
+                title = string.Format("{0}/{1}/{2} {3}:{4}", valDt.Day, valDt.Month, valDt.Year, valDt.Hour, valDt.Minute);
+            }
+            break;
+    }
+
+    string dateValStr = "";
+    if (value != null && value.ToString().Length >0 && Model.Format == InputDataType.DateTime)
+    {
+        dateValStr = ((DateTime)value).ToString("yyyy-MM-ddTHH:mm:ss");
+    }
+
+}
+
+<style>
+    input[readonly] {
+        opacity: 0.8;
+    }
+
+    textarea[readonly] {
+        opacity: 0.8;
+    }
+</style>
+
+@*autocomplete="true" ; inputta otomatik önerilerin kapatılması için eklendi..*@
+<div title="@title" style="@parentDivStyle">
+    @if (Model.Format == InputDataType.Text)
+    {
+        <input id="@idS" autocomplete="true" placeHolder="@(!String.IsNullOrEmpty(placeHolder) ? placeHolder : "")" style="width: 100%" type="text" value="@(!(value == null) && !(value.ToString() == "") ? value : "")" @maxlengthS @disabledS @readOnlyS />
+    }
+
+    @if (Model.Format == InputDataType.Integer)
+    {
+        <input id="@idS" autocomplete="true" placeHolder="@(!String.IsNullOrEmpty(placeHolder) ? placeHolder : "")" style="width: 100%" type="text" onkeypress="doubleIntegerLimit(this, event)" step="1" class="doubleinteger" data-isitdouble="false" data-sign="@Model.Sign" data-length="@Model.Length" value="@(!(value == null) && !(value.ToString() == "") ? value : "")" @disabledS @readOnlyS>
+    }
+
+    @if (Model.Format == InputDataType.Double)
+    {
+        <input id="@idS" autocomplete="true" placeHolder="@(!String.IsNullOrEmpty(placeHolder) ? placeHolder : "")" style="width: 100%" type="text" onkeypress="doubleIntegerLimit(this, event)" class="doubleinteger" data-isitdouble="true" data-sign="@Model.Sign" data-length="@Model.Length" value="@(!(value == null) && !(value.ToString() == "") ? value : "")" @disabledS @readOnlyS @prependStyle />
+    }
+
+    @if (Model.Format == InputDataType.Phone)
+    {
+        <input id="@idS" autocomplete="true" placeHolder="@(!String.IsNullOrEmpty(placeHolder) ? placeHolder : "")" style="width: 100%; border: 1px solid lightgray" class="phoneNumber" @* onkeypress="phoneNumberLimit(this, event)"*@ value="@(!(value == null) && !(value.ToString() == "") ? value : "")" @*pattern="\d*" x-autocompletetype="tel"*@ @disabledS @readOnlyS>
+    }
+    @if (Model.Format == InputDataType.Email)
+    {
+        <input id="@idS" autocomplete="true" placeHolder="@(!String.IsNullOrEmpty(placeHolder) ? placeHolder : "")" style="width: 100%" type="text" value="@(!(value == null) && !(value.ToString() == "") ? value : "")" @disabledS @readOnlyS />
+    }
+    @if (Model.Format == InputDataType.Date)
+    {
+        <input id="@idS" autocomplete="true" placeHolder="@(!String.IsNullOrEmpty(placeHolder) ? placeHolder : "")" style="width: 100%" type="date" value="@(!(value == null) && !(value.ToString() == "") ? ((DateTime) value).ToString("yyyy-MM-dd") : "")" @disabledS @readOnlyS />
+    }
+    @if (Model.Format == InputDataType.DateTime)
+    {
+
+        <input id="@idS" autocomplete="true" placeHolder="@(!String.IsNullOrEmpty(placeHolder) ? placeHolder : "")" style="width: 100%" type="datetime-local" value="@dateValStr" @disabledS @readOnlyS step="1" />
+    }
+    @if (Model.Format == InputDataType.TextArea)
+    {
+        <textarea id="@idS" autocomplete="true" placeHolder="@(!String.IsNullOrEmpty(placeHolder) ? placeHolder : "")" style="width: 100%; min-height: 62px; height: 60px; font-size: 12px;" rows="4" cols="50" @disabledS @readOnlyS>@Model.Value</textarea>
+    }
+    @if (Model.Format == InputDataType.CheckBox)
+    {
+        <input id="@idS" autocomplete="true" placeHolder="@(!String.IsNullOrEmpty(placeHolder) ? placeHolder : "")" style="width: 100%" type="checkbox" class="gd-input-checkbox" data-isitdouble="true" data-sign="@Model.Sign" data-length="@Model.Length" value="@(!(value == null) && !(value.ToString() == "") ? value : "")" @disabledS @readOnlyS @prependStyle />
+    }
+</div>
+
+<script>
+        $("#@idS").on("keyup", function () {
+            $(this).parent().attr("title", $(this).val());
+            $(this).attr("title", $(this).val());
+        });
+        $("#@idS").on("change", function() {
+            $(this).parent().attr("title", $(this).val());
+            $(this).attr("title", $(this).val());
+        });
+</script>

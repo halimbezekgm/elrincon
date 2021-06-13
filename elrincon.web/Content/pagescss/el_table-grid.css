@@ -1,0 +1,97 @@
+﻿.grid {
+    margin-left: 47px;
+    height: 100%;
+}
+
+.grid-head {
+    background-color: #3c6478;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    display: -webkit-box;
+    margin-right: -6px;
+}
+
+.grid-head-cell {
+    -webkit-box-flex: 1;
+    flex:inherit;
+    max-width: 100%;
+    padding: 6px;
+}
+
+
+.grid-row {
+    /*display: inline-block;*/
+    font-size: 12px;
+    text-align: left;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding: 0 10px;
+}
+    .grid-row .cell {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        flex: inherit ;
+        text-align:left;
+    }
+
+.grid-body {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.grid-footer {
+    padding-left: 5px;
+    padding-top: 2px;
+    border-top: 1px solid #3c6478;
+}
+
+.grid-body > div:not(.grid-filter-row) > div:nth-child(odd) {
+    background: #f5f5f5;
+}
+
+
+.grid-img {
+    width: 24px;
+    height: auto;
+}
+
+.grid-img-cell {
+    text-align-last: end;
+}
+
+.grid .sortable-column::after {
+    position: absolute;
+    content: "\21C5";
+    width: 1rem;
+    height: 1rem;
+    left: 100%;
+    margin-left: -1.25rem;
+    top: 50%;
+    margin-top: -0.3rem;
+    color: inherit;
+    font-size: 0.8em;
+    font-weight: 100;
+    line-height: 1;
+    opacity: 0.7;
+}
+.grid .sortable-column.sort-desc:after, .grid .sorting.sort-desc:after, .grid .sortable-column.sorting_desc:after, .grid .sorting.sorting_desc:after {
+    content: "\2193";
+}
+.grid .sortable-column.sort-asc:after, .grid .sorting.sort-asc:after, .grid .sortable-column.sorting_asc:after, .grid .sorting.sorting_asc:after {
+    content: "\2191";
+}
+
+.pagination {
+    width: 92%;
+    padding-left: 5px;
+}
+.pagination .page-item {
+    height: 27px;
+}
+.pagination .page-link { 
+    padding: 0.3rem 0.55rem;
+}

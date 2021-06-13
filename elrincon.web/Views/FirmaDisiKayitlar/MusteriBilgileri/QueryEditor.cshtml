@@ -1,0 +1,45 @@
+﻿@model elrincon.web.Models.FirmaDisiKayitlar.MusteriBilgileri.MusteriBilgileriEditorModel
+
+
+<div class="cell">
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Adı :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputAdModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Soyadı :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputSoyadModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Cep-Tel :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputTelefonCepModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                   Ülkesi :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.SelectUlkesiModel);}
+                </div>
+            </div>
+        </div>  
+</div> 

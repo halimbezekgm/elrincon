@@ -1,0 +1,108 @@
+﻿@model elrincon.web.Models.SharedModel.GridModel.ElDataGridModel
+
+@{
+    ViewBag.Title = "EmptyView";
+    Layout = "~/Views/_Layout.cshtml";
+}
+ 
+<div class="body-content">
+    <div class="row el_row">
+        <button class="button el-action-button" id="showmodalID"> Ekle </button>
+    </div>
+
+    <div data-role="navview" data-expanded="fs" data-compact="false" data-role-navview="true" class="navview navview-expand-lg compacted js-compact">
+        <div class="navview-pane importantWith">
+            <button class="pull-button">
+                <span class="default-icon-menu"></span>
+                <span id="pull-icon-label"> <span style="margin-left: 25px">Sorgula</span>  </span>
+            </button>
+
+            <div class="query-inputs">
+                @{Html.RenderPartial("~/Views/Empty/QueryEditor.cshtml");}
+            </div>
+
+            <div class="query-button" style="" align="right">
+                <button class="el-action-button"> Sorgula</button>
+            </div>
+        </div>
+        <div style="height: 90%;width: 100%">
+            @{Html.RenderPartial("~/Views/Shared/elGrid/ElDataGrid.cshtml", @Model);}
+        </div>
+    </div>
+</div>
+ 
+
+<script src="~/Scripts/jquery-3.5.1.slim.js"></script>
+<script>
+
+    @*------open editor ---------------------*@
+    function edit_empty_cliced(id) {
+        OpenEditormodal(id);
+    }
+
+    $("#showmodalID").on("click", function () {
+        OpenEditormodal(0);
+    });
+
+    function OpenEditormodal(id) {
+        $.ajax({
+            url: '@Url.Action("Index","EmptyEditor")',
+            cash: false,
+            data: {
+                id
+            },
+            TYPE: 'GET',
+            success: function(result) {
+                openModal(result);
+            }
+        });
+    }
+
+    @*delete row*@
+
+    function delete_empty_cliced(id) {
+        Metro.dialog.create({
+            title: "Emty Satır Sil",
+            content: "<div>Kaydı silmek istediğinizden emin isiniz..</div>",
+            actions: [
+                {
+                    caption: "Evet",
+                    cls: "js-dialog-close alert",
+                    onclick: function() {
+                        DeleteRecord(id);
+                    }
+                },
+                {
+                    caption: "Hayır",
+                    cls: "js-dialog-close",
+                    onclick: function(){
+                    }
+                }
+            ]
+        });
+
+    }
+
+    function DeleteRecord(id) {
+        $.ajax({
+            url: '@Url.Action("DeleteRow","EmptyList")',
+            cash: false,
+            data: {
+                id
+            },
+            TYPE: 'GET',
+            success: function (result) { 
+
+                if (result.result == "ok") {
+                    reloadGrid_empty_grid_id();
+                 
+                    ShowAlertMessage("Başarılı", "İşlem başarıyla gerçekleşti","success");
+
+                } else {
+                    ShowAlertMessage("Hata", result.message, "alert");
+                }
+            }
+        });
+    }
+
+</script>

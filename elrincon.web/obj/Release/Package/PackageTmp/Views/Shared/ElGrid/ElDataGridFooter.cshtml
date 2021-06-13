@@ -1,0 +1,94 @@
+﻿ 
+@using System.Data
+@model elrincon.web.Models.SharedModel.GridModel.ElDataGridModel
+ @{
+     var style = Model.IsWrite ? "width: fit-content; margin: 0; display:block" : "width: fit-content; margin: 0;display:none";
+     DataRowCollection rows = Model.GridTable.GridTable.Rows;
+     int rowCount = Model.GridTable.GridTable.Rows.Count;
+     
+     int pageCount = 0;
+     if(Model.PageSize > 0)
+     {
+         pageCount = Model.PageTotal / Model.PageSize;
+     }
+
+     var currentPage = Model.CurrentPage;
+     var currentPageNext = currentPage + 1;
+ }
+<div class="row">
+    <ul class="pagination">
+
+
+        @{
+            int curr = Model.CurrentPage;
+            int total = pageCount;
+            int start = (curr - 1) * Model.PageSize + 1;
+            int end = curr * Model.PageSize;
+            if (end > total)
+            {
+                end = total;
+            }
+            if (start < 0)
+            {
+                start = 0;
+            }
+
+            <div class="GdPagination" style="display: -webkit-box;">
+                @if (Model.PageTotal == 1)
+                {
+                    //nothing
+                }
+                else if (Model.PageTotal > 5)
+                {
+                    int back = Model.CurrentPage - 10;
+                    back = back < 1 ? 1 : back;
+                    int fw = Model.CurrentPage + 10;
+                    fw = fw > Model.PageTotal ? Model.PageTotal : fw;
+                    int last = Model.PageTotal;
+                    int bf = Model.CurrentPage - 1;
+                    int aft = Model.CurrentPage + 1;
+
+                    string firstDisabled = Model.CurrentPage < 3 ? "deaktif" : "";
+                    string lastDisabled = Model.CurrentPage > Model.PageTotal - 2 ? "deaktif" : "";
+                    string beforeInvisible = Model.CurrentPage == 1 ? "gorunmez" : "";
+                    string afterInvisible = Model.CurrentPage == Model.PageTotal ? "gorunmez" : "";
+
+                    <button class="pagination-button @firstDisabled" data-page="1"><<</button>
+                    <button class="pagination-button @firstDisabled" data-page="@back" title="@(bf). sayfa"><</button>
+
+                    <button class="pagination-button @beforeInvisible" data-page="@bf">@bf</button>
+                    <button class="pagination-button Current" data-page="@curr">@curr</button>
+                    <button class="pagination-button @afterInvisible" data-page="@aft">@aft</button>
+
+                    <button class="pagination-button @lastDisabled" data-page="@fw" title="@(fw). sayfa">></button>
+                    <button class="pagination-button @lastDisabled" data-page="@last">>></button>
+                }
+                else
+                {
+                    for (int i = 1; i <= Model.PageTotal; i++)
+                    {
+                        <button class="pagination-button @(i == curr ? "Current" : "")" data-page="@i">@i</button>
+                    }
+                }
+                <div class="grid-paging-info" style="display: contents;">
+                    @(start)-@(end)
+                    @{
+                        <div class="grid-page-size">
+                            <input id="size_select_@Model.GridId" value="@Model.PageSize" />
+                        </div>
+                    }
+                    @{
+                        <text>@Model.PageSize</text>
+                    }/@total)
+                </div>
+
+            </div>
+        }
+         
+    </ul>
+
+    <div class="grid-yazdir-button" style="@style">
+        <button class="el-action-button">Yazdır</button>
+    </div>
+</div>
+

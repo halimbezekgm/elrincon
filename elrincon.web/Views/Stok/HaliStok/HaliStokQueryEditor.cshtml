@@ -1,0 +1,96 @@
+﻿@model elrincon.web.Models.Stok.HaliStok.HaliStokEditorModel
+
+
+<div class="cell">
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Stok No :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", @Model.InputStokNoModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+               Alım Durumu :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElSelect", @Model.SelectAlimDurumu);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Stok Tarihi :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", @Model.InputTarihModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Şubesi :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElSelect", @Model.SelectSubeModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Ürün Çeşidi :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElSelect", @Model.SelectUrunCesidiModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Menşei :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElSelect", @Model.SelectMenseiModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Üretim :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElSelect", @Model.SelectUretimTipiModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Material :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElSelect", @Model.SelectMaterialModel);}
+            </div>
+        </div>
+    </div>
+
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Satıcı :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElSelect", @Model.SelectSaticiModel);}
+            </div>
+        </div>
+    </div>
+</div> 

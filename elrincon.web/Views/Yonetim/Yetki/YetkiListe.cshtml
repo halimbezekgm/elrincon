@@ -1,0 +1,41 @@
+﻿@model elrincon.web.Models.SharedModel.GridModel.ElDataGridModel
+
+@{
+    ViewBag.Title = "EmptyView";
+    Layout = "~/Views/_Layout.cshtml";
+}
+<style>
+    .grid {
+        margin-left: 0;
+    }
+
+    .grid-yazdir-button {
+        display: none !important;
+    }
+</style>
+<div class="body-content"> 
+    <div style="height: 100%;width: 100%">
+        @{Html.RenderPartial("~/Views/Shared/elGrid/ElDataGrid.cshtml", Model);}
+    </div>
+</div>
+
+<script>
+    function edit_yetki_listesi_clicked(id) {
+        $.ajax({
+            url: '@Url.Action("Index","YetkiEditor")',
+            cash: false,
+            data: {
+                id
+            },
+            beforeSend: function () {
+                $("#loading").css("display", "block");
+            },
+            TYPE: 'GET',
+            success: function(result) {
+                openModal(result);
+            }
+        }).done(function () {
+        $("#loading").css("display", "none");
+    });
+    } 
+</script>

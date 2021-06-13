@@ -1,0 +1,60 @@
+﻿@using elrincon.web.Models.SharedModel
+@model List<elrincon.web.Models.SharedModel.KardanYuzdelikOranlariModel>
+
+<style>
+    .th {
+        text-align-last: center !important;
+    }
+
+    .tdparite div {
+        width: 21% !important;
+        display: inline-table;
+    }
+
+    .table {
+        font-size: 12px;
+    }
+</style>
+
+
+<div class="table">
+    <div class="thead">
+        <div class="th"></div>
+        <div class="th">
+            Komisyon %
+        </div>
+        <div class="th" style="text-align: center">
+            M.KOMİSYON GİDER HESABI
+        </div>
+        <div class="th">
+        </div>
+    </div>
+    <div class="tbody outoNewRowOnChange">
+        @{
+            foreach (KardanYuzdelikOranlariModel yuzdelikOranlariModel in Model)
+            {
+                <div class="tr">
+                    <div class="td">
+                        @{Html.RenderPartial("ElSelect", yuzdelikOranlariModel.UrunTipi);}
+                    </div>
+                    <div class="td  "> 
+                        @{Html.RenderPartial("ElInput", yuzdelikOranlariModel.NarmalSatisYuzdeligi);}
+                    </div>
+                    <div class="td tdpariteMUHASEBE search-selectparent" style="margin: 0; padding: 0; ">
+                        @{Html.RenderPartial("ElSearchSelect", yuzdelikOranlariModel.MuhasebeGelirKodu);}
+                    </div>
+                    <div class="td tdparite" style="margin: 0; padding: 0">
+                        <img src="~/Content/images/delete.png" height="21" class="delete_yuzdelik_orani" />
+                    </div>
+                </div>
+            }
+
+        }
+
+    </div> 
+</div>  
+
+<script>
+
+</script>
+

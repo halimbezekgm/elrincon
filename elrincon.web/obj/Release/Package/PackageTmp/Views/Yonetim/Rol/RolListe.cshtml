@@ -1,0 +1,87 @@
+﻿@model elrincon.web.Models.SharedModel.GridModel.ElDataGridModel
+
+@{
+    ViewBag.Title = "EmptyView";
+    Layout = "~/Views/_Layout.cshtml";
+}
+<style>
+    .grid{
+        margin-left: 0;
+    }
+    .grid-yazdir-button {
+        display: none !important;
+    }
+</style>
+<div class="body-content">
+    <div class="row el_row">
+        <button class="button el-action-button ekle_button" onclick="add_rol_listesi_clicked()">Rol Ekle </button>
+    </div>
+    <div style="height: 90%;width: 100%">
+        @{Html.RenderPartial("~/Views/Shared/elGrid/ElDataGrid.cshtml", Model);}
+    </div>
+</div>
+
+
+
+<script>
+    function add_rol_listesi_clicked() {
+        OpenEditormodal(0);
+    }
+    function edit_rol_listesi_clicked(id) {
+        OpenEditormodal(id);
+    }
+    function OpenEditormodal(id) {
+        $.ajax({
+            url: '@Url.Action("Index","RolEditor")',
+            cash: false,
+            data: {
+                id
+            },
+            beforeSend: function () {
+                $("#loading").css("display", "block");
+            },
+            TYPE: 'GET',
+            success: function(result) {
+                openModal(result);
+            }
+        }).done(function () {
+            $("#loading").css("display", "none");
+        });
+    }
+    function delete_rol_listesi_clicked(id) {
+        Metro.dialog.create({
+            title: "Satır Sil",
+            content: "<div>Kaydı silmek istediğinizden emin isiniz..</div>",
+            actions: [
+                {
+                    caption: "Evet",
+                    cls: "js-dialog-close alert",
+                    onclick: function () {
+                        $.ajax({
+                            url: '@Url.Action("DeleteRow","RolListe")',
+                            cash: false,
+                            data: {
+                                id
+                            },
+                            TYPE: 'GET',
+                            success: function (result) {
+                                if (result.result == "ok") {
+                                    ShowAlertMessage("Başarılı", "İşlem başarıyla gerçekleşti", "success");
+                                    reloadGrid_rol_liste_grid_id();
+                                } else {
+                                    ShowAlertMessage("Hata", result.message, "alert");
+                                }
+                            }
+                        });
+                    }
+                },
+                {
+                    caption: "Hayır",
+                    cls: "js-dialog-close",
+                    onclick: function () {
+                    }
+                }
+            ]
+        });
+    }
+</script>

@@ -1,0 +1,75 @@
+﻿
+@model elrincon.web.Models.EmptyModel.EmtyEditorModel
+@{
+    ViewBag.Title = "Contact";
+    Layout = "~/Views/_Modal.cshtml"; 
+}
+
+<div class="cell">
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Adı : 
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput",@Model.InputModel);}
+            </div>
+        </div>
+    </div> 
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Şifre : 
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput",@Model.InputSifreModel);}
+            </div>
+        </div>
+    </div>
+    @*<div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Soyad : 
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElSelect",@Model.SelectModel);}
+            </div>
+        </div>
+    </div>*@
+    <div class="cell" align="right">
+        <div class="row" style=" width: fit-content;" >
+            <button class="el-action-button save_empty_data"> Kaydet </button>
+        </div>
+    </div>
+</div> 
+<script>
+    var id_value = '@Model.Id';
+    $('.save_empty_data').on("click",
+        function() {
+            var data = {
+                id: id_value,
+                kullaniciAdi: $('#test_model_input').val(),
+                kullaniciSifre: $('#test_model_input_sifre').val()
+            } 
+
+            $.ajax({
+                url: '@Url.Action("SaveOrUpdate","EmptyEditor")',
+                cash: false,
+                data: data,
+                TYPE: 'GET',
+                success: function (result) {
+                   
+                    if (result.result == "ok") {
+                        hideModal();
+                        reloadGrid_empty_grid_id();
+
+                        ShowAlertMessage("Başarılı", "İşlem başarıyla gerçekleşti","success");
+
+                    } else {
+                        ShowAlertMessage("Hata", result.message, "alert");
+                    }
+                }
+            });
+        });
+    
+</script>

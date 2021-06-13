@@ -1,0 +1,342 @@
+﻿@model elrincon.web.Models.SharedModel.ElSelectModel
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/_Layout.cshtml";
+
+}
+
+<style>
+    .cikis_li {
+        display: inherit;
+        /*margin-left: calc(100% - 500px) !important;*/
+        background-color: red !important;
+        color: white !important;
+
+    }
+    .sube_li {
+        display: inherit;
+        margin-left: calc(100% - 986px) !important;  
+        background-color: transparent !important;
+    }
+
+    .ribbon-menu .content-holder {
+        display: block ;
+        position: absolute;
+        z-index: 4 !important;
+        width: -webkit-fill-available !important;
+    }
+    .pinging {
+        position: inherit !important;
+    } 
+
+</style>
+
+<div class="desktop">
+
+    <nav data-role="ribbonmenu">
+        <ul class="tabs-holder">
+            <li class="static staticping" style="background-color:  #004d6f !important;"><a href="#" >
+                <img id="menuimg" style="width: 18px; height: auto" src="~/Content/images/slide-up-48.png"/>
+            </a></li>
+            <li class="open_menu"><a href="#section-one">Personel Bilgileri</a></li>
+            <li class="open_menu"><a href="#section-five">Firma Dışı Kayıtlar</a></li>
+            <li class="open_menu"><a href="#section-two">Stok Bilgileri</a></li>
+            <li class="open_menu"><a href="#section-three">Satış/Kasa</a></li>
+            <li class="open_menu"><a href="#section-four">Yönetim</a></li>
+            <li class="open_menu"><a href="#section-six">Ek İşlemler</a></li>
+
+            <li class=" static sube_li">
+                <div class="cell">
+                    <div class="row">
+                        <div class="input-caption" style="color: white">
+                            ŞUBESİ :
+                        </div>
+                        <div class="input-value">
+                            @{Html.RenderPartial("ElSelect", @Model);}
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="static cikis_li"><a href="~/Login/SignOut" id="logout">ÇIKIŞ</a></li>
+        </ul>
+
+        <div class="content-holder" style="display: none">
+            <div class="section" id="section-one">
+                <div class="group">
+
+                    <!--<button class="ribbon-button page-redirect" data-pagewidth="790" data-pageheight="390" data-id="empty-row"
+                            data-url="@Url.Action("Index","EmptyList")" onclick="createWindow(this)" data-title="Empty List">-->
+                        @*title, url , width, height*@
+                        <!--<span class="icon">
+                            <img src="images/share.svg">
+                        </span>
+                        <span class="caption">Empty List</span>
+                    </button>-->
+
+                    <button class="ribbon-button page-redirect" data-pagewidth="1287" data-pageheight="585" data-id="personel_listesi"
+                            data-url="@Url.Action("Index", "PersonelListe")" onclick="createWindow(this)" data-title="Personel Listesi">
+                        @*title, url , width, height*@
+                        <span class="icon">
+                            <img src="/Content/images/personel.png">
+                        </span>
+                        <span class="caption">Personel Listesi</span>
+                    </button>
+
+                    <button class="ribbon-button page-redirect"data-pagewidth="1287" data-pageheight="585" data-id="hanutcu_listesi"
+                            data-url="@Url.Action("Index", "HanutcuListe")" onclick="createWindow(this)" data-title="Hanutçu Listesi">
+                        @*title, url , width, height*@
+                        <span class="icon">
+                            <img src="/Content/images/hanutcu.png">
+                        </span>
+                        <span class="caption">Hanutçu Listesi</span>
+                    </button>
+
+                    
+                    <span class="title">Personel Takibi</span>
+                </div>
+
+                @*
+                    Group Example: 
+                    <div class="group">
+                    <button class="ribbon-button" onclick="createWindowModal()">
+                        <span class="icon">
+                            <img src="images/share.svg">
+                        </span>
+                        <span class="caption">Share</span>
+                    </button>
+
+                    <span class="title">Group title</span>
+                </div>*@
+            </div>
+            <div class="section" id="section-five">
+                <div class="group">
+
+                    <button class="ribbon-button page-redirect" data-pagewidth="1357" data-pageheight="582" data-id="musteri_bilgileri_listesi"
+                            data-url="@Url.Action("Index", "MusteriBilgileriListe")" onclick="createWindow(this)" data-title="Müşteri Bilgileri">
+                        @*title, url , width, height*@
+                        <span class="icon">
+                            <img src="/Content/images/customer.png">
+                        </span>
+                        <span class="caption">Müşteri Bilgileri Listesi</span>
+                    </button>
+
+                    <button class="ribbon-button page-redirect" data-pagewidth="1180" data-pageheight="653" data-id="hesap_plani"
+                            data-url="@Url.Action("Index", "RezervasyonListe")" onclick="createWindow(this)" data-title="Rezervasyon">
+                        @*title, url , width, height*@
+                        <span class="icon">
+                            <img src="/Content/images/rezervasyon_liste.svg">
+                        </span>
+                        <span class="caption">Rezervasyon</span>
+                    </button>
+
+                    <button class="ribbon-button page-redirect" data-pagewidth="1287" data-pageheight="585" data-id="rehber_listesi"
+                            data-url="@Url.Action("Index", "RehberDisListe")" onclick="createWindow(this)" data-title="Rehber Listesi">
+                        @*title, url , width, height*@
+                        <span class="icon">
+                            <img src="/Content/images/rehber.png">
+                        </span>
+                        <span class="caption">Rehber Listesi</span>
+                    </button>
+
+                    <button class="ribbon-button page-redirect" data-pagewidth="1287" data-pageheight="585" data-id="acenta_listesi"
+                            data-url="@Url.Action("Index", "AcentaListe")" onclick="createWindow(this)" data-title="Acente Listesi">
+                        @*title, url , width, height*@
+                        <span class="icon">
+                            <img src="/Content/images/rehber.png">
+                        </span>
+                        <span class="caption">Acente Listesi</span>
+                    </button>
+                </div>
+            </div>
+            <div class="section" id="section-two">
+                <div class="group">
+
+                    <button class="ribbon-button page-redirect" data-pagewidth="1357" data-pageheight="582" data-id="hali_stok_listesi"
+                            data-url="@Url.Action("Index", "HaliStokListe")" onclick="createWindow(this)" data-title="Halı/Kilim Stok Listesi">
+                        @*title, url , width, height*@
+                        <span class="icon">
+                            <img src="/Content/images/folder.png">
+                        </span>
+                        <span class="caption">Halı/Kilim Stok Listesi</span>
+                    </button>
+
+                    <!--<button class="ribbon-button page-redirect" data-pagewidth="790" data-pageheight="390" data-id="tezgahtar_listesi"
+                            data-url="@Url.Action("About", "Home")" onclick="createWindow(this)" data-title="Tezgahtar Listesi">-->
+                        @*title, url , width, height*@
+                        <!--<span class="icon">
+                            <img src="/Content/images/list_mor.png">
+                        </span>
+                        <span class="caption">Stok Listesi</span>
+                    </button>-->
+
+                    <span class="title">Stoklar</span>
+                </div>
+
+            </div>
+            <div class="section" id="section-three">
+                <div class="group">
+                    <button class="ribbon-button page-redirect" data-pagewidth="1357" data-pageheight="600" data-id="satis_listesi"
+                            data-url="@Url.Action("Index", "SatisEkraniListe")" onclick="createWindow(this)" data-title="Satış Oluştur">
+                        <span class="icon">
+                            <img src="/Content/images/kur_duzenleme.svg">
+                        </span>
+                        <span class="caption">Satış Düzenle</span>
+                    </button>
+                    <span class="title">Satiş Takibi</span>
+                </div>
+                <div class="group">
+                    <button class="ribbon-button page-redirect" data-pagewidth="1007" data-pageheight="550" data-id="kasa_banka_listesi"
+                            data-url="@Url.Action("Index", "KasaBankaGoruntule")" onclick="createWindow(this)" data-title="Kasa/Banka Görüntüle">
+                        <span class="icon">
+                            <img src="/Content/images/kur_duzenleme.svg">
+                        </span>
+                        <span class="caption">Kasa/Banka Görüntüle</span>
+                    </button> 
+                    <button class="ribbon-button page-redirect" data-pagewidth="1007" data-pageheight="550" data-id="hesap_hareketleri_listesi"
+                            data-url="@Url.Action("Index", "HesapHareketleri")" onclick="createWindow(this)" data-title="Hesap Hareketleri">
+                        <span class="icon">
+                            <img src="/Content/images/kur_duzenleme.svg">
+                        </span>
+                        <span class="caption">Hesap Hareketleri</span>
+                    </button>
+                    <button class="ribbon-button page-redirect" data-pagewidth="900" data-pageheight="550" data-id="fis_girisi_listesi"
+                            data-url="@Url.Action("Index", "FisGirisiListe")" onclick="createWindow(this)" data-title="Fiş Girişi">
+                        <span class="icon">
+                            <img src="/Content/images/kur_duzenleme.svg">
+                        </span>
+                        <span class="caption">Fiş Girişi</span>
+                    </button>
+                    <span class="title">Kasa</span>
+                </div>
+                <div class="group">
+                    <button class="ribbon-button page-redirect" data-pagewidth="1357" data-pageheight="600" data-id="kur_listesi"
+                            data-url="@Url.Action("Index", "KurListe")" onclick="createWindow(this)" data-title="Kur Tanımları">
+                        <span class="icon">
+                            <img src="/Content/images/kur_duzenleme.svg">
+                        </span>
+                        <span class="caption">Kur Düzenle</span>
+                    </button>
+                    <button class="ribbon-button page-redirect" data-pagewidth="850" data-pageheight="620" data-id="gunluk_kurlar"
+                            data-url="@Url.Action("Index", "KurEditor")" onclick="createWindow(this)" data-title="TCMD'den Kur Sorgula ">
+                        <span class="icon">
+                            <img src="/Content/images/kur_donustur.svg">
+                        </span>
+                        <span class="caption">TCMD'den Kur Sorgula</span>
+                    </button>
+                    <span class="title">Kur Düzenle</span>
+                </div>
+            </div>
+        <div class="section" id="section-four">
+            <div class="group">
+                @*<button class="ribbon-button page-redirect"  data-pagewidth="879" data-pageheight="585" data-id="rol_listesi"
+                        data-url="@Url.Action("Index", "RolListe")" onclick="createWindow(this)" data-title="Rol Listesi">
+                    <span class="icon">
+                        <img src="/Content/images/yetki_tanimla.svg">
+                    </span>
+                    <span class="caption">Yetki Tanımlama</span>
+                </button>*@
+                <button class="ribbon-button page-redirect" data-pagewidth="1000" data-pageheight="585" data-id="yetki_listesi"
+                        data-url="@Url.Action("Index", "YetkiListe")" onclick="createWindow(this)" data-title="Yetki Listesi">
+                    <span class="icon">
+                        <img src="/Content/images/iconfinder-role_yetki.svg">
+                    </span>
+                    <span class="caption">Kullanıcı Yetki Düzenleme</span>
+                </button>
+                <span class="title">Role group</span>
+            </div>
+            <!--<div class="group">
+
+            <button class="ribbon-button page-redirect" data-pagewidth="1181" data-pageheight="485" data-id="personel_yuzdelikleri"
+                    data-url="@Url.Action("Index", "PersonelYuzdelik")" onclick="createWindow(this)" data-title="Personel Yüzdelikleri">-->
+            @*title, url , width, height*@
+            <!--<span class="icon">
+                <img src="/Content/images/iconfinder_yuzdelik-personel.svg">
+            </span>
+            <span class="caption">Personel Yüzdelikleri </span>
+            </button>
+
+            <button class="ribbon-button page-redirect" data-pagewidth="1181" data-pageheight="485" data-id="hanutcu_yuzdelikleri"
+                    data-url="@Url.Action("Index", "HanutcuYuzdelik")" onclick="createWindow(this)" data-title="Hanutçu Yüzdelikleri">-->
+            @*title, url , width, height*@
+            <!--<span class="icon">
+                <img src="/Content/images/iconfinder_yuzdelik.svg">
+            </span>
+            <span class="caption">Hanutçu Yüzdelikleri</span>
+            </button>
+            </div>-->
+            <div class="group">
+
+                <button class="ribbon-button page-redirect" data-pagewidth="1181" data-pageheight="585" data-id="liste_domain_listesi"
+                        data-url="@Url.Action("Index", "DomainListe")" onclick="createWindow(this)" data-title="Domain Liste Düzenle">
+                    @*title, url , width, height*@
+                    <span class="icon">
+                        <img src="/Content/images/domain_list.png">
+                    </span>
+                    <span class="caption">Domain Liste Düzenle</span>
+                </button>
+            </div>
+            <div class="group">
+
+                <button class="ribbon-button page-redirect" data-pagewidth="1076" data-pageheight="597" data-id="muhasebe_tanimlari"
+                        data-url="@Url.Action("Index", "MuhasebeTanimlari")" onclick="createWindow(this)" data-title="Muhasebe Tanımları">
+                    @*title, url , width, height*@
+                    <span class="icon">
+                        <img src="/Content/images/muhasebe_tanimlari.png">
+                    </span>
+                    <span class="caption">Muhasebe Tanımları</span>
+                </button>
+
+                <button class="ribbon-button page-redirect" data-pagewidth="765" data-pageheight="673" data-id="hesap_plani"
+                        data-url="@Url.Action("Index", "HesapPlani")" onclick="createWindow(this)" data-title="Hesap Planı">
+                    @*title, url , width, height*@
+                    <span class="icon">
+                        <img src="/Content/images/hesap_plani.svg">
+                    </span>
+                    <span class="caption">Hesap Planı</span>
+                </button>
+            </div> 
+        </div>
+        <div class="section" id="section-six">
+            <div class="group">
+                <button class="ribbon-button page-redirect" data-pagewidth="650" data-pageheight="600" data-id="kargo_kodlari"
+                        data-url="@Url.Action("Index", "KargoKodlari")" onclick="createWindow(this)" data-title="Kargo Kodları">
+                    <span class="icon">
+                        <img src="/Content/images/kur_duzenleme.svg">
+                    </span>
+                    <span class="caption">Kargo Kodları</span>
+                </button>
+                <button class="ribbon-button page-redirect" data-pagewidth="500" data-pageheight="465" data-id="kargo_hesabi"
+                        data-url="@Url.Action("Index", "KargoHesabi")" onclick="createWindow(this)" data-title="Kargo Hesabı">
+                    <span class="icon">
+                        <img src="/Content/images/kur_donustur.svg">
+                    </span>
+                    <span class="caption">Kargo Hesabı</span>
+                </button>
+                <span class="title">Kargo Hesabı</span>
+            </div>
+        </div>
+        </div>
+    </nav>
+    <div class="window-area">  
+        <div class=" logo-form p-6 mx-auto bd-default win-shadow" style="top: 33%; text-align: center">
+            <div class="row">
+                <div class="cell-7" style="text-align: right">
+                    <img width="425" height="81" alt="" data-sizes="(max-width: 425px) 100vw, 425px" class="attachment-full size-full lazyloaded lazy-loaded"
+                         src="~/Content/images/loginLogo.png" sizes="(max-width: 425px) 100vw, 425px">
+                </div>
+                <div class="cell-5" style="text-align: left; margin-top: 13px">
+                    <label style="font-size: 35px; color: white">(@ViewBag.UserSubeAdi)</label>
+                </div>
+            </div>
+            
+        </div>
+
+    </div>  
+</div>
+
+
+<script>
+
+     
+
+</script>

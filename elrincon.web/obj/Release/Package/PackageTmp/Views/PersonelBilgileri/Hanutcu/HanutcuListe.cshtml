@@ -1,0 +1,146 @@
+﻿@model elrincon.web.Models.PersonelBilgileri.Hanutcu.HanutcuListeModel
+
+@{
+    ViewBag.Title = "EmptyView";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<div class="body-content">
+    <div class="row el_row" style="margin-left: 6px">
+        <button class="button el-action-button ekle_button" id="showmodalID">Hanutçu Ekle </button>
+    </div>
+
+    <div data-role="navview" data-expanded="fs" data-compact="false" data-role-navview="true" class="navview navview-expand-lg compacted js-compact">
+        <div class="navview-pane importantWith">
+            <button class="pull-button">
+                <span class="default-icon-menu"></span>
+                <span id="pull-icon-label"> <span style="margin-left: 25px">Sorgula</span>  </span>
+            </button>
+
+            <div class="query-inputs">
+                @{Html.RenderPartial("~/Views/PersonelBilgileri/Hanutcu/HanutcuQueryEditor.cshtml", @Model.HanutcuEditorModel);}
+            </div>
+
+            <div class="query-button" style="" align="right">
+                <button class="el-action-button btn_hanutcu_bilgileri_sorgula"> Sorgula</button>
+            </div>
+        </div>
+        <div style="height: 90%;width: 100%">
+            @{Html.RenderPartial("~/Views/Shared/elGrid/ElDataGrid.cshtml", Model.GridModel);}
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Scripts/jquery-3.5.1.slim.js"></script>
+<script>
+
+    @*------open editor ---------------------*@
+    function edit_hanutcu_listesi_cliced (id) {
+        OpenEditormodal(id);
+    }
+
+    $("#showmodalID").on("click", function () {
+        OpenEditormodal(0);
+    });
+
+    function OpenEditormodal(id) {
+        $.ajax({
+            url: '@Url.Action("Index", "HanutcuEditor")',
+            cash: false,
+            data: {
+                id
+            },
+            beforeSend: function () {
+                $("#loading").css("display", "block");
+            },
+            TYPE: 'GET',
+            success: function(result) {
+                openModal(result);
+            }
+        }).done(function () {
+            $("#loading").css("display", "none");
+        });
+    }
+
+    @*delete row*@
+
+    function delete_hanutcu_listesi_cliced(id) {
+        Metro.dialog.create({
+            title: "Satır Sil",
+            content: "<div>Kaydı silmek istediğinizden emin isiniz..</div>",
+            actions: [
+                {
+                    caption: "Evet",
+                    cls: "js-dialog-close alert",
+                    onclick: function() {
+                        DeleteRecord(id);
+                    }
+                },
+                {
+                    caption: "Hayır",
+                    cls: "js-dialog-close",
+                    onclick: function(){
+                    }
+                }
+            ]
+        });
+
+    }
+
+    function DeleteRecord(id) {
+        $.ajax({
+            url: '@Url.Action("DeleteRow", "HanutcuListe")',
+            cash: false,
+            data: {
+                id
+            },
+            TYPE: 'GET',
+            success: function (result) {
+
+                if (result.result == "ok") {
+                    reloadGrid_hanutcu_liste_grid_id();
+
+                    ShowAlertMessage("Başarılı", "İşlem başarıyla gerçekleşti","success");
+
+                } else {
+                    ShowAlertMessage("Hata", result.message, "alert");
+                }
+            }
+        });
+    }
+
+
+    $(".btn_hanutcu_bilgileri_sorgula").on("click", function () {
+        var parameter = crdfor_@(Model.GridModel.GridId)();
+
+        parameter.CustomProperties.adi = $("#hanutcu_editor_input_adi_for_query").val();
+        parameter.CustomProperties.soyadi = $("#hanutcu_editor_input_soyadi_for_query").val();
+        parameter.CustomProperties.subesi = $("#hanutcu_editor_model_select_sube_id_for_query").val();
+        parameter.CustomProperties.tc_no = $("#hanutcu_editor_input_tc_no_for_query").val();
+        parameter.CustomProperties.tel_no1 = $("#hanutcu_editor_input_tel_no1_for_query").val();
+        parameter.CustomProperties.maas_miktari = $("#hanutcu_editor_input_maas_miktari_for_query").val();
+
+        var data = {
+            parameter:parameter
+        }
+
+        $.ajax({
+            url: '@Url.Action("GetGridBody","HanutcuListe")',
+            cash: false,
+            type: "POST",
+            data: data,
+            success: function (result) {
+
+                if (result != "") {
+                    $("#grid-body_hanutcu_liste_grid_id").html(result);
+                }
+
+                else {
+                    ShowAlertMessage("Hata", result.message, "alert");
+                }
+            }
+        });
+    });
+
+</script>

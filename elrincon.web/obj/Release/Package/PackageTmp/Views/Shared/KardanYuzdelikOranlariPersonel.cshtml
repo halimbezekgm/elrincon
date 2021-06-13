@@ -1,0 +1,97 @@
+﻿@using elrincon.web.Models.SharedModel
+@model List<elrincon.web.Models.SharedModel.KardanYuzdelikOranlariModel>
+@{
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+@{Html.RenderPartial("/Views/Shared/KardanYuzdelikOranlari.cshtml", @Model);}
+
+<div class="cell" align="right">
+    <div class="row" style=" width: fit-content;">
+        <button class="el-action-button save_personel_data_yuzdelik"> Kaydet </button>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.5.1.min.js"></script>
+<script>
+
+
+    $('.save_personel_data_yuzdelik').on("click",
+        function () {
+            var saveYuzdelikOraniModels = [];
+
+            $('.outoNewRowOnChange > .tr').each(function(index, tr) {
+                var currentRow=$(this);
+
+                var tip = currentRow.find(".td:eq(0) select:eq(0)").val();
+                var nsp1 = currentRow.find(".td:eq(1) input:eq(0)").val();
+                var nsp2 = currentRow.find(".td:eq(1) input:eq(1)").val();
+                var nsy = currentRow.find(".td:eq(1) input:eq(2)").val();
+
+                var ksp1 = currentRow.find(".td:eq(2) input:eq(0)").val();
+                var ksp2 = currentRow.find(".td:eq(2) input:eq(1)").val();
+                var ksy = currentRow.find(".td:eq(2) input:eq(2)").val();
+
+                var isp1 = currentRow.find(".td:eq(3) input:eq(0)").val();
+                var isp2 = currentRow.find(".td:eq(3) input:eq(1)").val();
+                var isy = currentRow.find(".td:eq(3) input:eq(2)").val();
+
+                var ydsp1 = currentRow.find(".td:eq(4) input:eq(0)").val();
+                var ydsp2 = currentRow.find(".td:eq(4) input:eq(1)").val();
+                var ydsy = currentRow.find(".td:eq(4) input:eq(2)").val();
+
+                var gcsp1 = currentRow.find(".td:eq(5) input:eq(0)").val();
+                var gcsp2 = currentRow.find(".td:eq(5) input:eq(1)").val();
+                var gcsy = currentRow.find(".td:eq(5) input:eq(2)").val();
+
+
+                saveYuzdelikOraniModels.push({
+                    YuzdeTip : 1,//personel komisyon
+                    UrunTipi : tip,
+                    NarmalSatisParite1 : nsp1,
+                    NarmalSatisParite2 : nsp2,
+                    NarmalSatisYuzdeligi : nsy,
+                    KapiSatisParite1 : ksp1,
+                    KapiSatisParite2 : ksp2,
+                    KapiSatisYuzdeligi : ksy,
+                    InternetSatisParite1 : isp1,
+                    InternetSatisParite2 : isp2,
+                    InternetSatisYuzdeligi : isy,
+                    YurtDisiSatisParite1 : ydsp1,
+                    YurtDisiSatisParite2 : ydsp2,
+                    YurtDisiSatisYuzdeligi : ydsy,
+                    GenelCiroSatisParite1 : gcsp1,
+                    GenelCiroSatisParite2 : gcsp2,
+                    GenelCiroSatisYuzdeligi : gcsy
+                    });
+            });
+
+            //console.log(saveYuzdelikOraniModels.toString());
+
+            //modelSave.SaveYuzdelikOraniModels = saveYuzdelikOraniModels;
+
+            //console.log({ saveYuzdelikOraniModels});
+
+            var dataSend = JSON.stringify({ 'model': saveYuzdelikOraniModels });
+            console.log({dataSend});
+
+            $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: '@Url.Action("SaveOrUpdate", "PersonelYuzdelik")',
+                data: dataSend,
+                TYPE: 'POST',
+                success: function (result) {
+
+                    if (result.result == "ok") {
+
+                        ShowAlertMessage("Başarılı", "İşlem başarıyla gerçekleşti","success");
+
+                    } else {
+                        ShowAlertMessage("Hata", result.message, "alert");
+                    }
+                }
+            });
+        });
+</script>
+

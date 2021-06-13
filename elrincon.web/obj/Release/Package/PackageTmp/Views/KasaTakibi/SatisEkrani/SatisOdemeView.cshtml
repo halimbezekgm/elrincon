@@ -1,0 +1,220 @@
+﻿@using elrincon.web.Models.KasaTakibi.SatisEkrani
+@model elrincon.web.Models.KasaTakibi.SatisEkrani.SatisOdemeModel
+
+<style>
+    .caption-parent {
+        width: 165px;
+        padding-left: 7px;
+    }
+    .yaksitliSatis {
+        overflow-y: auto;
+        /*max-height: 215px;*/
+        height: 245px;
+    }
+</style>
+
+@{
+    
+        @*<div class="pesinSatis">
+
+            <div class="cell">
+                <div class="row">
+                    <div class="input-caption">
+                        Ödeme Miktarı:
+                    </div>
+                    <div class="input-value" style=" width: calc(100% - 232px);">
+                        @{Html.RenderPartial("ElInput", @Model.OdemeMiktari);}
+                    </div>
+                    <div class="input-value" style="width: 50px!important">
+                        @{Html.RenderPartial("ElSelect", @Model.OdemeParaCinsi);}
+                    </div>
+                </div>
+            </div>
+        </div>*@
+                            //if (Model.OdemeTipi == 1)
+
+<div class="yaksitliSatis">
+    <ul class="odemeListesi">
+  
+            @{
+                foreach (SatisOdemeTipiMiktariModel miktariModel in Model.SatisTipiMiktariModel)
+                {
+                    <li>
+                        <div class="cell">
+                            <div class="row">
+                                <div class="input-caption caption-parent">
+                                    <div class="row" style="height: 13px;">
+                                        <div class="input-caption" style="width: 99px; padding-left: 18px;">
+                                            Ödeme Şekli:
+                                        </div>
+                                        <div class="input-value" style=" width:31px;">
+                                            <a href="#" class="odemeEkle" title="Ödeme Ekle"><h6 style="margin: 0">(+)</h6></a>
+                                        </div>
+                                        <div class="input-value" style="width: 40px!important">
+                                            <a href="#" class="odemeCikar" title="Ödeme Çıkar"><h6 style="margin: 0">(-)</h6></a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="input-value search-selectparent" style="width: 191px!important">
+                                    @{Html.RenderPartial("ElSearchSelect", miktariModel.OdemeTipiCinsi);}
+                                </div>
+                                <div class="input-value" style=" width: calc(100% - 430px);">
+                                    @{Html.RenderPartial("ElInput", miktariModel.OdemeMiktari);}
+                                </div>
+                                <div class="input-value" style="width: 50px!important">
+                                    @{Html.RenderPartial("ElSelect", miktariModel.OdemeParaCinsi);}
+                                </div>
+
+                            </div>
+                        </div>
+                    </li>
+
+                }
+            }
+
+    </ul>
+    <div class="taksitBilgileriClass" style="overflow: hidden ">
+        @{
+            if (Model.OdemeTipi == 2)
+            {
+
+                <div class="row">
+                    <div class="cell-4">
+                        <div class="row" style="height: 13px;">
+                            <div class="input-caption" style="width: 108px; padding-left: 24px;">
+                                Taksit Bilgileri:
+                            </div>
+                            <div class="input-value" style=" width:31px;">
+                                <a href="#" class="taksitEkle" title="Taksit Ekle"><h6 style="margin: 0">(+)</h6></a>
+                            </div>
+                            <div class="input-value" style="width: 31px!important">
+                                <a href="#" class="taksitCikar" title="Takist Çıkar"><h6 style="margin: 0">(-)</h6></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cell-8">
+                        <ul class="takitListesi">
+                            @{
+                                int i = 0;
+                                foreach (SatisOdemeTaksitModel odemeTaksitModel in Model.SatisTaksitModel)
+                                {
+                                    i++;
+                                    <li>
+                                        <div class="cell">
+                                            <div class="row">
+                                                <div class="input-caption">
+                                                    @i. Taksit:
+                                                </div>
+                                                <div class="input-value" style="width: calc(100% - 232px);">
+                                                    @{Html.RenderPartial("ElInput", @odemeTaksitModel.OdenecekMiktari);}
+                                                </div>
+                                                <div class="input-value" style="width: 50px !important">
+                                                    @{Html.RenderPartial("ElSelect", @odemeTaksitModel.OdenecekParaCinsi);}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </li>
+
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+            }
+        }
+    </div>
+</div>
+    <div class="addNewTaksitDiv" style="display: none">
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    2.Taksit:
+                </div>
+                <div class="input-value" style=" width: calc(100% - 232px);">
+                    @{Html.RenderPartial("ElInput", @Model.SatisTaksitModel[0].OdenecekMiktari);}
+                </div>
+                <div class="input-value" style="width: 50px!important">
+                    @{Html.RenderPartial("ElSelect", @Model.SatisTaksitModel[0].OdenecekParaCinsi);}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div  class="addNewOdemeDiv" style="display: none">
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption caption-parent">
+                    <div class="row" style="height: 13px;">
+                      
+                    </div>
+                </div>
+                
+                <div class="input-value search-selectparent" style="width: 191px!important">
+                    @{Html.RenderPartial("ElSearchSelect", @Model.SatisTipiMiktariModel[0].OdemeTipiCinsi);}
+                </div>
+                <div class="input-value" style=" width: calc(100% - 430px);">
+                    @{Html.RenderPartial("ElInput", @Model.SatisTipiMiktariModel[0].OdemeMiktari);}
+                </div>
+                <div class="input-value" style="width: 50px!important">
+                    @{Html.RenderPartial("ElSelect", @Model.SatisTipiMiktariModel[0].OdemeParaCinsi);}
+                </div>
+            </div>
+        </div>
+    </div>
+     
+}
+
+
+<script>
+    //taksit
+    $(".taksitCikar").on("click",
+        function () {
+            var howMany = $('.takitListesi li').length;
+
+            if (howMany == 1) {
+                ShowAlertMessage("Hata", "En Az 1 Taksit Olmalıdır! ", "alert");
+
+                return;
+            }
+
+            $('.takitListesi li:last-child').remove();
+        });
+    $(".taksitEkle").on("click",
+        function () {
+            var howMany = $('.takitListesi li').length + 1;
+            $(".addNewTaksitDiv .input-caption").text(howMany + ". Taksit");
+            var html = $(".addNewTaksitDiv").html();
+
+            $(".takitListesi").append('<li>' + html + '</li>');
+        });
+
+    //ödeme
+    $(".odemeCikar").on("click",
+        function () {
+            var howManyo = $('.odemeListesi').children("li").length;
+            if (howManyo == 1) {
+                ShowAlertMessage("Hata", "En Az 1 Ödeme Olmalıdır! ", "alert");
+
+                return;
+            }
+
+            $('.odemeListesi li:last-child').remove();
+        });
+    $(".odemeEkle").on("click",
+        function () { 
+            $.ajax({ 
+                type: 'POST',
+                url: '@Url.Action("GetSearchOdemeSekliModel", "SatisEkraniEditor")',
+                TYPE: 'POST',
+                success: function (result) {
+                    $(".addNewOdemeDiv .search-selectparent").html(result);
+                }
+            }); 
+
+            var html = $(".addNewOdemeDiv").html();
+            $(".odemeListesi").append('<li>' + html + '</li>');
+        });
+</script>

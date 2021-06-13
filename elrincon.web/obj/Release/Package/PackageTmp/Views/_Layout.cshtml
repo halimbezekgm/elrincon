@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ElRincon</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <meta property="og:url" content="https://metroui.org.ua/index.html">
+    <meta property="og:title" content="Metro 4 Components Library">
+    <meta property="og:description" content="halimbezek.com">
+    <meta property="og:type" content="website">
+    @*<meta property="og:image" content="https://metroui.org.ua/images/m4-logo-social.png">
+        <meta property="og:image:secure_url" content="https://metroui.org.ua/images/m4-logo-social.png">*@
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="968">
+    <meta property="og:image:height" content="504">
+
+    <meta name="author" content="Halim Bezek">
+    <meta name="description" content="The most popular HTML, CSS, and JS library in Metro style.">
+    <meta name="keywords" content="HTML, CSS, JS, Metro, CSS3, Javascript, HTML5, UI, Library, Web, Development, Framework">
+
+
+    @*@Styles.Render("~/Content/css")*@
+    @*@Scripts.Render("~/bundles/modernizr")*@
+
+    <link href="~/Content/v4-metro-all-min.css" rel="stylesheet" />
+    <link href="~/Content/pagescss/el_home-index.css" rel="stylesheet" />
+    <link href="~/Content/pagescss/el_table-grid.css" rel="stylesheet" />
+    <link href="~/Content/pagescss/el_button.css" rel="stylesheet" />
+    <link href="~/Content/pagescss/el_style.css" rel="stylesheet" />
+
+    <style>
+
+        [data-role="window"] {
+            height: 100% !important;
+        }
+
+        .window-area {
+            /*background: url("/Content/images/loginLogo.png") center center no-repeat; */
+            background-color: #4c7288;
+            background-size: cover;
+        }
+
+        #charm {
+            height: calc(100vh - 40px);
+            width: 396px;
+            background-color: #1F4F5D;
+        }
+    </style>
+</head>
+<body class="m4-cloak">
+
+    @RenderBody()
+
+
+    <div id="modal-show" class="modal modal-editor"></div>
+
+
+    @*@Scripts.Render("~/bundles/jquery")*@
+
+    <script src="~/Scripts/jquery-3.5.1.min.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+    <script src="~/Scripts/v4-metro.min.js"></script>
+    @*start data grid js*@
+    <!--<script src="~/Scripts/jquery.datagrid.js"></script>
+    <script src="~/Scripts/jquery.datagrid.bootstrap3.js"></script>
+    <script src="~/Scripts/projectscript/demo.js"></script>
+    <script src="~/Scripts/projectscript/countries.js"></script>-->
+    @*end data grid js*@
+
+    <div id="loading" style="display: none">
+        <img id="loading-image" src="/Content/images/loading.gif" alt="Loading..." />
+    </div>
+
+    <script src="~/Scripts/projectscript/home-index.js"></script>
+    <script src="~/Scripts/ProjectScript/el_script.js"></script>
+    <script src="~/Scripts/ProjectScript/ElSelect.js"></script>
+    <script>
+    </script>
+</body>
+</html>

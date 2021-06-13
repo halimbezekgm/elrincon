@@ -1,0 +1,67 @@
+﻿@model elrincon.web.Models.PersonelBilgileri.Hanutcu.HanutcuEditorModel
+
+
+
+
+<div class="cell">
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Adı :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", @Model.InputAdiModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Soyadı :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", @Model.InputSoyadiModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                TC :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", @Model.InputTcModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Tel. No1 :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", @Model.InputTelNo1Model);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Şubesi :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElSelect", @Model.SelectSubeModel);}
+            </div>
+        </div>
+    </div> 
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Maaş Tipi :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElSelect", @Model.SelectMaasTipiModel);}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,85 @@
+﻿ 
+@using elrincon.web.Models.SharedModel
+@model elrincon.web.Models.SharedModel.ElSelectModel
+
+@{
+    string id = Model.Id;
+    string idS = !string.IsNullOrEmpty(id) ? id : "_" + Guid.NewGuid().ToString().Replace("-", "");
+    string selected = "";
+    string sCode = "";
+    string maxHeight = Model.MaxContainerHeight == 0 ? "200px" : Model.MaxContainerHeight + "px";
+    string lineHeight = Model.ContainerLineHeight > 0 ? "height: " + Model.ContainerLineHeight + "px; line-height: " + Model.ContainerLineHeight + "px" : "";
+    string displayCancelBtn = (Model.Disabled || !Model.CancelButton) ? "none" : "block";
+    bool defaultBlank = !String.IsNullOrEmpty(Model.DefaultBlankOption);
+
+    if (Model.SelectedIndex >= 0)
+    {
+        selected = Model[Model.SelectedIndex].Value;
+        sCode = Model[Model.SelectedIndex].Code.ToString();
+    }
+
+    <div id="@idS" class="gd-select" style="display: grid">
+
+        @if (Model.SelectedIndex == -1)
+        {
+            <button id="@(idS)_btn" class="search-select-button" data-code="@Model.DefaultBlankOptionValue">@Model.DefaultBlankOption</button>
+        }
+        else
+        {
+            <button id="@(idS)_btn"  class="search-select-button" data-code="@sCode">@selected</button>
+        }
+        <div class="drop-container" style="display: none">
+            <div class="input">
+                <input id="@(idS)_srch" type="text" placeholder="Ara..." class="" autocomplete="chrome-off">
+                <div class="button-group">
+                    <button class="button input-clear-button" tabindex="-1" type="button" id="@(idS)_srch_clr">
+                        <span class="default-icon-cross"></span>
+                    </button>
+                </div>
+            </div>
+            <ul id="@(idS)_list" class="d-menu" style="max-height: @maxHeight;">
+                @foreach (CodeValueDic cv in Model)
+                {
+                    <li title="@cv.Value" data-code="@cv.Code" data-value="@cv.Value">
+                        <a style="@lineHeight">@cv.Value</a>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="btn" id="@(idS)_clear_btn" style="position: absolute; display: @displayCancelBtn; z-index: 1; margin-left: calc(100% - 34px) !important;">
+            <button class="btn" onclick="cancel_this_select(this)" style="background: none; border: none;width: 20px" title="Sil"><span style="background:none">X</span></button>
+        </div>
+    </div>
+}
+
+<script>
+    if (@(idS) == "undefined") {
+        var @(idS) = new GdSelect("@idS");
+    } else {
+        if (typeof @idS == "object" && typeof @(idS).clear == "function") {
+            @(idS).destroy();
+        }
+        @(idS) = new ElSelect("@idS");
+        @{
+            if (Model.ContainerLineHeight > 0)
+            {
+                <text>@(idS).lineHeight = @Model.ContainerLineHeight</text>
+            }
+        }
+    }
+    @(idS).on("open",
+        function() {
+            $("#@(idS)_srch").focus();
+
+        });
+
+    @*$("#@(idS)_btn").on("click",
+        function() {
+            $("#@(idS)_list").toggle();
+        });*@
+
+    $("#@(idS)_clear_btn").on("click", function () {
+        $(this).parent().find("#@(idS)_btn").text("");
+        $(this).parent().find("#@(idS)_btn").attr("data-code","");
+    });
+</script>

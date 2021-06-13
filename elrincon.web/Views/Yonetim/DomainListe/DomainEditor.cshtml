@@ -1,0 +1,165 @@
+﻿@model elrincon.web.Models.Yonetim.DomainEditorModel
+@{
+    ViewBag.Title = Model.ListeAdi;
+    Layout = "~/Views/_Modal.cshtml";
+    var styleDefault = "height: 400px";
+
+    if (Model.ListeId <= 0)
+    {
+        ViewBag.Title = "Yeni Domain Ekle";
+        styleDefault = "height=200px";
+    }
+
+}
+<style>
+  /*  .not_change_div {
+        pointer-events: none;
+        display: inline-block;
+        background-color: #F0F0F0;
+        border-radius: 6px;
+        border: 1px solid #EEE;
+    }*/
+
+    .open-modal .window {
+        max-width: 96% !important;
+    }
+
+    .window-content {
+        width: 477px;
+        overflow: hidden;
+    }
+    .domainlist .grid {
+        margin-left: 0px;
+    }
+
+</style>
+<div class="row el_row" style="@styleDefault">
+    <div class="row el_row" style="margin-left: 6px">
+        @if (Model.ListeId > 0)
+        {
+            <button class="button el-action-button" id="addNewDomainToList"> Ekle </button>
+
+        }
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Adı :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.ListeAdiInputModel);}
+                </div>
+            </div>
+        </div>
+    </div>
+
+        @if (Model.ListeId > 0)
+        {
+            <div class="domainlist" style="height: 75%; width: 100%">
+                @{Html.RenderPartial("~/Views/Shared/elGrid/ElDataGrid.cshtml", Model.ListeGridModel);}
+            </div>
+        }
+        
+    <div class="cell" align="right">
+        <div class="row" style="width: fit-content;">
+            <button onclick="saveDomainListName()" class="button el-action-button"> Kaydet  </button>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/v4-metro.min.js"></script>
+<script>
+
+    @*------open editor ---------------------*@
+    function edit_domain_editor_cliced(id) {
+        OpenEditormodalChild(id);
+    }
+
+    $("#addNewDomainToList").on("click", function () {
+        OpenEditormodalChild(0);
+    });
+
+    function OpenEditormodalChild(id) {
+        var data = {
+            id,
+            listeId: '@Model.ListeId'
+        }
+        $.ajax({
+            url: '@Url.Action("OpenEditor", "DomainEditor")',
+            cash: false,
+            data:data,
+            TYPE: 'GET',
+            success: function (result) {
+                openModalChild(result);
+            }
+        });
+    }
+
+
+    function saveDomainListName() {
+        var listeid = '@Model.ListeId';
+        var listeadi = $("#yeni_domain_liste_adi").val();
+
+        $.ajax({
+            url: '@Url.Action("SaveOrUpdateList", "DomainEditor")',
+            data: {
+                listeid,
+                listeadi
+            },
+            cash: false,
+            beforesend: function() {
+
+            },
+            success: function (result) {
+                if (result.result == "ok") {
+                    hideModal();
+                    reloadGrid_domain_child_liste_grid_id();
+
+                    //ShowAlertMessage("Başarılı", "İşlem başarıyla gerçekleşti","success");
+
+                } else {
+                    //ShowAlertMessage("Hata", result.message, "alert");
+                }
+            },
+            error: function(result) {
+                console.error(result.message);
+                //ShowAlertMessage("Hata", result.message, "alert");
+            }
+        });
+    }
+
+
+
+    @*delete row el liste degre*@
+
+    function delete_domain_editor_cliced(id) {
+        console.log("liste detay delete");
+        if (confirm('Are you sure you want to save this thing into the database?')) {
+            DeleteRecordDetay(id);
+        } else {
+            // Do nothing!
+            console.log('Do nothing');
+        } 
+    }
+
+    function DeleteRecordDetay(id) {
+        $.ajax({
+            url: '@Url.Action("DeleteRow","DomainEditor")',
+            cash: false,
+            data: {
+                id
+            },
+            TYPE: 'GET',
+            success: function (result) {
+
+                if (result.result == "ok") {
+                    reloadGrid_domain_child_liste_grid_id();
+
+                    ShowAlertMessage("Başarılı", "İşlem başarıyla gerçekleşti","success");
+
+                } else {
+                    ShowAlertMessage("Hata", result.message, "alert");
+                }
+            }
+        });
+    }
+
+</script>

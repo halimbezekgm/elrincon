@@ -1,0 +1,55 @@
+﻿@model elrincon.web.Models.KasaTakibi.SatisEkrani.SatisEkraniEditorModel
+
+
+<div class="cell">
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    SatisEkrani No :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputSatisNoModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Şube :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.SubeModel);}
+                </div>
+            </div>
+        </div>
+        @*<div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Rehber :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.InputTarihModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                   Servis :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputServisModel);}
+                </div>
+            </div>
+        </div> 
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Şubesi :
+                </div>
+                <div class="input-value">
+                    @{ Html.RenderPartial("ElSelect", @Model.InputUlkesiModel);}
+                </div>
+            </div>
+        </div>*@ 
+</div> 

@@ -1,0 +1,49 @@
+﻿
+
+<style>
+    .open-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background: rgba(0,0,0,0.2);
+    }
+</style>
+<link href="~/Content/pagescss/el_style.css" rel="stylesheet" />
+<link href="~/Content/pagescss/el_button.css" rel="stylesheet" />
+<link href="~/Content/pagescss/el_home-index.css" rel="stylesheet" />
+<link href="~/Content/pagescss/el_table-grid.css" rel="stylesheet" />
+
+<div class="open-modal">
+    <div class="window" style="width: fit-content;height: auto;position: initial;margin: auto; margin-top: 1.2px; max-width:73%;height: initial;max-height: 99%;">
+        <div class="window-caption">
+            <span class="icon"></span>
+            <span class="title">@ViewBag.Title</span>
+            <div class="buttons">
+                <span class="btn-close editor-btn-close"></span>
+            </div>
+        </div>
+        <div class="window-content">
+            <div style=" margin: 0 5px;">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal-show-child" class="modal modal-editor-child"></div>
+<script src="~/Scripts/jquery-3.5.1.min.js"></script> 
+<script src="~/Scripts/ProjectScript/el_script.js"></script>
+<script>
+    $(".editor-btn-close").on("click", function () {
+        $(".open-modal").parent().css("display", "none");
+        $(".open-modal").parent().html("");
+    });
+
+    $(document).on("click", ".editor-btn-child-close", function () {
+        $(".modal-editor-child").css("display", "none");
+        $(".modal-editor-child").html("");
+    });
+
+</script>

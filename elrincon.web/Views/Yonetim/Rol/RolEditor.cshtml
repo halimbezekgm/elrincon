@@ -1,0 +1,74 @@
+﻿@model elrincon.web.Models.Yonetim.Rol.RolEditorModel
+@{
+    ViewBag.Title = "Rol Editör ";
+    Layout = "~/Views/_Modal.cshtml";
+}
+<style>
+    .open-modal .window {
+        height:230px !important;
+    } 
+</style>
+
+<div class="cell-12" style="margin-top:20px">
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Rol Adı :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", Model.InputRolAdiModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Rol Açıklama :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElInput", Model.InputRolAciklamaModel);}
+            </div>
+        </div>
+    </div>
+    <div class="cell">
+        <div class="row">
+            <div class="input-caption">
+                Rol Kartı :
+            </div>
+            <div class="input-value">
+                @{Html.RenderPartial("ElSelect", Model.SelectRolKarti);}
+            </div>
+        </div>
+    </div>
+    <div class="cell" align="right">
+        <div class="row">
+            <button class="el-action-button" style="margin:auto !important" onclick="save_rol(@Model.RolId)"> Kaydet </button>
+        </div>
+    </div>
+</div> 
+
+<script>
+    function save_rol(id) {
+        var data = {
+            rolId: id,
+            rolAdi: $("#rol_editor_input_rol_adi").val(),
+            rolAciklama: $("#rol_editor_input_rol_aciklama").val(),
+            rolKartId: $("#rol_editor_select_rol_kart").val()
+        }
+        $.ajax({ 
+            dataType: 'json',
+            type: 'POST',
+            url: '@Url.Action("SaveOrUpdate","RolEditor")',
+            data: data, 
+            success: function (result) {
+                if (result.result == "ok") {
+                    hideModal();
+                    reloadGrid_rol_liste_grid_id();
+                    ShowAlertMessage("Başarılı", "İşlem başarıyla gerçekleşti", "success");
+                } else {
+                    ShowAlertMessage("Hata", result.message, "alert");
+                }
+            }
+        });
+    }
+</script>

@@ -1,0 +1,58 @@
+﻿.input-caption {
+    width: 120px;
+}
+
+.input-value {
+    width: calc(100% - 120px);
+}
+
+.importantWith {
+    width: 100% !important;
+}
+
+.body-content {
+    height: 100% !important;
+    position: fixed;
+    width: 100%;
+}
+
+.query-inputs, #pull-icon-label, .query-button {
+    display: none;
+}
+
+.query-inputs {
+    height: calc(100% - 129px);
+}
+.ekle_button {
+    height: 29px;
+    margin-left: 47px;
+}
+
+.drop-container ul {
+    margin: 0px 0 0 0px;
+    border: 1px solid;
+    border-color: #cccccc;
+    max-height: 150px !important;
+    overflow: auto;
+    max-width: 370px;
+}
+
+.not_change_div .drop-container ul {
+    margin: 0px 0 0 -43px !important;
+    border: 1px solid;
+    border-color: #cccccc;
+    max-height: 150px !important;
+    overflow: auto;
+    max-width: 370px;
+    right: 0px;
+    left: auto;
+}
+
+.drop-container {
+    z-index: 50;
+    position: inherit;
+}
+
+[disabled] {
+    color: #717171 !important;
+}

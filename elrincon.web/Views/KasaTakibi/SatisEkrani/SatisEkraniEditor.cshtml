@@ -1,0 +1,720 @@
+﻿
+@using elrincon.web.Models.KasaTakibi.SatisEkrani
+@using elrincon.web.Models.SharedModel
+@using elrincon.web.Models.Yonetim.SatisEkrani
+@model elrincon.web.Models.KasaTakibi.SatisEkrani.SatisEkraniEditorModel
+@{
+    ViewBag.Title = "Satis Ekrani";
+    Layout = "~/Views/_Modal.cshtml";
+}
+<style>
+  /*  .not_change_div {
+        pointer-events: none;
+        display: inline-block;
+        background-color: #F0F0F0;
+        border-radius: 6px;
+        border: 1px solid #EEE;
+    }*/
+
+    .open-modal .window {
+        max-width: 96% !important;
+    }
+ 
+    .table {
+        /*width: calc(100% - 655px);*/
+        /*border: 1px solid;*/
+        padding: 11px;
+        font-size: 11px;
+    }
+    .table .td, .table .th, .table td, .table th {
+        padding: 3px !important;
+    }
+    .input-value div {
+        height: 25px;
+    }
+    hr {
+        border: 0;
+        height: 2px;
+        background-color: #004d6f;
+    }
+    li {
+        min-height: 25px;
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+    .table select {
+        width: 100% !important;
+    }
+    .paraTipi select {
+        width: 63px !important;
+    }
+
+    textarea {
+        width: 99%;
+        min-height: 62px;
+        height: 60px !important;
+        font-size: 12px;
+    }
+    .disabled {
+        pointer-events:none; 
+        opacity:0.6;         
+    }
+    .drop-container ul {
+        margin: 0 !important;
+        width: 220px !important;
+    }
+    .search-selectparent input {
+        width: 61px !important;
+    }
+
+    .drop-container {
+        height: 0px;
+    }
+
+    .tablestokListesi .drop-container input {
+            width: 30px !important;
+        }
+</style>
+<div class="row el_row" style="margin-top: 30px">
+    <div class="cell-12" align="center">
+        <h6>Satış Ekle</h6>
+    </div>
+    <div class="cell-4" style=" ">
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Tarih :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputTarihModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Satış No :
+                </div>
+                <div class="input-value disabled">
+                    @{Html.RenderPartial("ElInput", @Model.InputSatisNoModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Satış Tutarı/Döviz :
+                </div>
+                <div class="input-value" style=" width: calc(100% - 184px);">
+                    @{Html.RenderPartial("ElInput", @Model.SatisTutariModel);}
+                </div>
+                <div class="input-value paraTipi" style="width: 50px!important">
+                    @{Html.RenderPartial("ElSelect", @Model.SatisParaCinsiModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Rezervasyon:
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.RezervasyonBilgiModel);}
+                </div>
+            </div>
+        </div> 
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                   Müşteri Ad-Soyad:
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputAdSoyadModel);}
+                </div>
+            </div>
+        </div> 
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Ciro Dahil Mi?:
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.CiroDahilmiModel);}
+                </div>
+            </div>
+        </div>  
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Satiş Şekli:
+                </div>
+                <div class="input-value" style="">
+                    @{Html.RenderPartial("ElSelect", @Model.SatisSekliModel);}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cell-3" style="max-width: 478px !important;">
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                   Şube:
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.SubeModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Kontrat No:
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.KontratNoModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Etiket Toplam/Döviz:
+                </div>
+                <div class="input-value" style=" width: calc(100% - 184px);">
+                    @{Html.RenderPartial("ElInput", @Model.EtikekToplamiModel);}
+                </div>
+                <div class="input-value paraTipi" style="width: 50px!important">
+                    @{Html.RenderPartial("ElSelect", @Model.EtiketToplamiParaCinsiModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                  Parite :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.SatisParitesiModel);}
+                </div>
+            </div>
+        </div> 
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Ülkesi:
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.UlkeModel);}
+                </div>
+            </div>
+        </div> 
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Kargo tutarı/Döviz:
+                </div>
+                <div class="input-value" style=" width: calc(100% - 184px);">
+                    @{Html.RenderPartial("ElInput", @Model.KargoUcretiModel);}
+                </div>
+                <div class="input-value paraTipi" style="width: 50px!important">
+                    @{Html.RenderPartial("ElSelect", @Model.KargoUcretParaCinsiModel);}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cell-5" style="">
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Peşin/Taksit :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.OdemeSekli);}
+                </div>
+            </div>
+        </div>
+        <div class="showOdemeTipi">
+@{
+    if (Model.SatisOdemeEditorModel.OdemeTipi>0)
+    {
+        <div class="row">
+            @{Html.RenderPartial("~/Views/KasaTakibi/SatisEkrani/SatisOdemeView.cshtml", @Model.SatisOdemeEditorModel);}
+        </div>
+    }
+}
+        </div>
+    </div>
+     
+<div class="cell-12">
+    <hr/>
+    <div class="row">
+        <div class="cell-12">
+            <div class="cell">
+                <div class="row" style="height: 13px;">
+                    <div class="input-caption">
+                        Satılan Stoklar:
+                    </div>
+                    <div class="input-value" style=" width:40px;">
+                        <a href="#" class="stokEkle" title="Stok Ekle"><h6 style="margin: 0">(+)</h6></a> 
+                    </div> 
+                </div>
+            </div> 
+            <div class="">
+                <div class="table tablestokListesi">
+                    <div class="thead">
+                        <div class="th">
+                            Stok No
+                        </div>
+                        <div class="th">
+                           Ürün Adı
+                        </div>
+                        <div class="th">
+                            Fiyatı
+                        </div>
+                        <div class="th">
+                            En*Boy
+                        </div>
+                        <div class="th">
+                            Etiket Fiyatı
+                        </div>
+                        <div class="th">
+                        </div>
+                    </div>
+                    <div class="tbody outoNewRowForStok">
+                        @{
+                            foreach (StokList list in Model.StokListModel)
+                            {
+                                <div class="tr">
+                                    <div class="td search-selectparent" style="width: 136px">
+                                        @{Html.RenderPartial("ElSearchSelect", list.StokNoModel);}
+                                    </div>
+                                    <div class="td ">
+                                        @{Html.RenderPartial("ElInput", list.StokUrunAdiModel);}
+                                    </div>
+                                    <div class="td">
+                                        @{Html.RenderPartial("ElInput", list.StokFiyatiModel);}
+                                    </div>
+                                    <div class="td">
+                                        @{Html.RenderPartial("ElInput", list.StokEnModel);}
+                                    </div>
+                                    <div class="td">
+                                        @{Html.RenderPartial("ElInput", list.StokBoyModel);}
+                                    </div>
+                                    <div class="td" style="margin: 0; padding: 0">
+                                        <img src="~/Content/images/delete.png" style="max-height: 24px;" class="delete_yuzdelik_orani"/>
+                                    </div>
+                                </div> 
+                            }
+                        }
+
+                    </div>
+                </div>
+                <div class="addNewRowStok" style="display: none">
+                    <div class="tbody addNewRowStokNew">
+                         <div class="tr">
+                            <div class="td search-selectparent">
+                                @{Html.RenderPartial("ElSearchSelect", Model.StokListModel[0].StokNoModel);}
+                            </div>
+                            <div class="td ">
+                                @{Html.RenderPartial("ElInput", Model.StokListModel[0].StokUrunAdiModel);}
+                            </div>
+                            <div class="td">
+                                @{Html.RenderPartial("ElInput", Model.StokListModel[0].StokFiyatiModel);}
+                            </div>
+                            <div class="td">
+                                @{Html.RenderPartial("ElInput", Model.StokListModel[0].StokEnModel);}
+                            </div>
+                            <div class="td">
+                                @{Html.RenderPartial("ElInput", Model.StokListModel[0].StokBoyModel);}
+                            </div>
+                            <div class="td" style="margin: 0; padding: 0">
+                                <img src="~/Content/images/delete.png" style="max-height: 24px;" class="delete_yuzdelik_orani"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+
+    <div class="cell-12">
+    <hr/>
+    <div class="">
+    <div class="table talepersonelyuzdelikleri">
+        <div class="thead">
+            <div class="th">
+            </div>
+            <div class="th">
+                Tezgahtar 1
+            </div>
+            <div class="th">
+                Tezgahtar 2
+            </div>
+            <div class="th">
+                Acenta
+            </div>
+            <div class="th">
+                Rehber 1
+            </div>
+            <div class="th">
+                Rehber 2
+            </div>
+            <div class="th">
+                Hanut 1
+            </div>
+            <div class="th">
+                Hanut 2
+            </div>
+            <div class="th">
+                Grp.Bşk
+            </div>
+            <div class="th">
+                Şef. Reh.
+            </div>
+            <div class="th">
+                Ofis
+            </div>
+        </div>
+        <div class="tbody">
+            <div class="tr">
+                <div class="td tdleftCaption" style=" width: 2px!important;">
+                    <ul>
+                        <li><label class="text-bold">KİŞİ =</label><hr /></li>
+                        <li>Halı</li>
+                        <li>Pırlanta</li>
+                        <li>Fantezi</li>
+                        <li>Gümüş</li>
+                        <li>Altın</li>
+                        <li>Seramik</li>
+                        <li>Deri</li>
+                        <li>Hediyelik</li>
+                    </ul>
+                </div>
+                @{
+                    var t = 0;
+                    foreach (SatisPersonelleri satisPersonelleri in Model.SatisPersonelleriList)
+                    {
+                        t++;
+                         <div class="td tdValues">
+                            <ul>
+                                <li class="search-selectparent">
+                                    @{
+                                        if (t != 10 && t != 8 && t != 9)
+                                        {
+                                               Html.RenderPartial("ElSearchSelect", satisPersonelleri.PersoneltipBilgiModel); 
+                                        }
+                                    }
+
+                                </li>
+                                <li class="disabled">
+                                    @{ Html.RenderPartial("ElInput", satisPersonelleri.HaliYuzdelikModel); }
+                                </li>
+                                <li class="disabled">
+                                    @{ Html.RenderPartial("ElInput", satisPersonelleri.PirlantaYuzdelikModel); }
+                                </li>
+                                <li class="disabled">
+                                    @{ Html.RenderPartial("ElInput", satisPersonelleri.FanteziYuzdelikModel); }
+                                </li>
+                                <li class="disabled">
+                                    @{ Html.RenderPartial("ElInput", satisPersonelleri.GumusYuzdelikModel); }
+                                </li>
+                                <li class="disabled">
+                                    @{ Html.RenderPartial("ElInput", satisPersonelleri.AltınYuzdelikModel); }
+                                </li>
+                                <li class="disabled">
+                                    @{ Html.RenderPartial("ElInput", satisPersonelleri.SeramikYuzdelikModel); }
+                                </li>
+                                <li class="disabled">
+                                    @{ Html.RenderPartial("ElInput", satisPersonelleri.DeriYuzdelikModel); }
+                                </li>
+                                <li class="disabled">
+                                    @{ Html.RenderPartial("ElInput", satisPersonelleri.HediyelikYuzdelikModel); }
+                                </li>
+                            </ul>
+                            @*@{Html.RenderPartial("ElSelect", @Model.Hanutcu2Model);}*@
+                        </div>
+                    }
+                }
+            </div>
+            
+
+    </div>
+    </div>
+   
+    </div>
+    </div>
+    </div>
+</div>
+<div class="cell-12">
+    <div class="row">
+        <div class="input-caption">
+            AÇIKLAMA :
+        </div>
+        <div class="input-value">
+            @{Html.RenderPartial("ElInput", @Model.InputAciklamaModel);}
+        </div>
+    </div>
+</div>
+    <div class="cell" align="right">
+        <div class="row" style="width: fit-content;">
+            <button class="el-action-button save_satis_data"> Kaydet </button>
+        </div>
+    </div>
+</div>
+<script>
+    var searchbuttonId = "bilgi";
+    var searchbuttonList = "bilgilist";
+    var searchButtonValue = "";
+    var searchButtonValueNew = "";
+    $(document).on('click', '.search-select-button', function () {
+        searchbuttonId = $(this).attr('id');
+        searchbuttonList = $(this).parent().attr('id');
+        searchButtonValue = $(this).data("code");
+        console.log("id :  " + searchbuttonId);
+        console.log("searchButtonValue :  " + searchButtonValue);
+
+    });
+    $(document).on('click', '.search-select-button', function () {
+        searchbuttonId = $(this).attr('id');
+        searchButtonValue = $(this).data("code");
+        console.log("id :  " + searchbuttonId);
+        console.log("searchButtonValue :  " + searchButtonValue);
+
+    });
+    $(document).on('click', '#' + searchbuttonList + " li ", function () {
+        searchbuttonId = $(this).attr('id');
+        searchButtonValue = $(this).data("code");
+        console.log("id :  " + searchbuttonId);
+        console.log("searchButtonValue :  " + searchButtonValue);
+
+    });
+    //document.addEventListener('mouseup', function (e) {
+    //    console.log("id :  " + searchbuttonId);
+    //    var container = $('.outoNewRowForStok .search-selectparent #' + searchbuttonId);/*.search-select-button*/
+    //    if (!$(e.target).closest(container).length) {
+    //        console.log("id :  " + searchbuttonId);
+    //        searchButtonValueNew = $("#" + searchbuttonId).data("code");
+
+    //        console.log("searchButtonValueNew :  " + searchButtonValueNew);
+
+    //        //FillYuzdelikDeger(this);
+    //    }
+    //});
+
+    function FillYuzdelikDeger(trt) {
+        var tht = $(this);
+        var inputId = $(this).attr("id");
+        var id = $(this).val();
+        var satisSekli = $("#satisekrani_editor_select_editorSatisSekliModel").val();
+        var satisParite = $("#satisekrani_editor_editorSatisParitesiModel").val();
+        $.ajax({ 
+            type: 'POST',
+            url: '@Url.Action("GetPerasonelYuzdelik", "SatisEkraniEditor")',
+            data: { inputId, id, satisSekli, satisParite},
+            TYPE: 'POST',
+            success: function (result) {
+                if (result.result && result.result == "err") {
+                    ShowAlertMessage("Hata", result.message, "alert");
+                } else {
+                    console.log("hali : " + result.haliYuzde);
+
+                    tht.parent().parent().parent().find("li:eq(1) input:eq(0)").val(result.haliYuzde);
+                    tht.parent().parent().parent().find("li:eq(2) input:eq(0)").val(result.pirlantaYuzde);
+                    tht.parent().parent().parent().find("li:eq(3) input:eq(0)").val(result.fanteziYuzde);
+                    tht.parent().parent().parent().find("li:eq(4) input:eq(0)").val(result.gumusYuzde);
+                    tht.parent().parent().parent().find("li:eq(5) input:eq(0)").val(result.altinYuzde);
+                    tht.parent().parent().parent().find("li:eq(6) input:eq(0)").val(result.seramikYuzde);
+                    tht.parent().parent().parent().find("li:eq(7) input:eq(0)").val(result.deriYuzde);
+                    tht.parent().parent().parent().find("li:eq(8) input:eq(0)").val(result.hediyelikYuzde);
+                }
+            }
+        });
+    }
+
+    $(".stokEkle").on("click",
+        function () {
+            $.ajax({ 
+                type: 'POST',
+                url: '@Url.Action("GetSearchStokModel", "SatisEkraniEditor")',
+                TYPE: 'POST',
+                success: function (result) {
+                    $(".addNewRowStokNew .search-selectparent").html(result);
+                }
+            });
+
+            var html = $(".addNewRowStokNew").html();
+            $(".outoNewRowForStok").append( html);
+        });
+    $(document).on('click','.delete_stok_bilgisi', function() {
+        deleteYuzdelik(this);
+    });
+
+    function deleteYuzdelik(tht) {
+
+        //if ($(tht).parent().parent().is(":last-child")) {
+        //    ShowAlertMessage("Hata", "Boş satır silinemez! ", "alert");
+
+        //    return;
+        //}
+
+        Metro.dialog.create({
+            title: "Stok Bilgisini Sil",
+            content: "<div>Değeri silmek istediğinizden emin isiniz?</div>",
+            actions: [
+                {
+                    caption: "Evet",
+                    cls: "js-dialog-close alert",
+                    onclick: function () {
+                        $(tht).parent().parent().remove();
+                    }
+                },
+                {
+                    caption: "Hayır",
+                    cls: "js-dialog-close",
+                    onclick: function () {
+                    }
+                }
+            ]
+        });
+    }
+
+
+    var id_value = '@Model.Id';
+    $('.save_satis_data').on("click",
+        function () {
+            var TaksitList = [];
+            var StokList = [];
+            var SatisPersonelleriListe = [];
+            var AlinanOdemeler = [];
+             
+            $('.odemeListesi li').each(function (index, tr) {
+                var currentRow = $(this);
+                AlinanOdemeler.push({
+                    OdemeSekli: currentRow.find(".search-selectparent button:eq(0)").data("code"),
+                    Odememiktari: currentRow.find("input:eq(1)").val(), 
+                    OdemeDovizCinsi: currentRow.find("select:eq(0)").val(), 
+                });
+            });
+
+            $('.takitListesi  li').each(function (index, tr) {
+                var currentRow = $(this); 
+                TaksitList.push({
+                    TaksitMiktari: currentRow.find("input:eq(0)").val(),
+                    TaksitOdemeCinsi: currentRow.find("select:eq(0)").val(), 
+                });
+            });
+
+            $('.tablestokListesi  .tr').each(function (index, tr) {
+                var currentRow = $(this);
+                //console.log("assa: " + currentRow.find(".td:eq(0) select:eq(0)").val());
+                StokList.push({
+                    StokNoModel :currentRow.find(".td:eq(0) select:eq(0)").val(),
+                    StokAlisTarihiModel: currentRow.find(".td:eq(1) input:eq(0)").val(),
+                    StokFiyatiModel :currentRow.find(".td:eq(2) input:eq(0)").val(),
+                    StokEnModel :currentRow.find(".td:eq(3) input:eq(0)").val(),
+                    StokBoyModel :currentRow.find(".td:eq(4) input:eq(0)").val()
+                });
+            });
+
+
+            $('.talepersonelyuzdelikleri  .tdValues ').each(function (index, tr) {
+
+                var currentRow = $(this);
+                //console.log("assa1: " + currentRow.find(".td:eq(0) select:eq(0)").val());
+                SatisPersonelleriListe.push({
+                    PersoneltipBilgiModel :currentRow.find("li:eq(0) select:eq(0)").val(), 
+                    HaliYuzdelikModel: currentRow.find("li:eq(1) input:eq(0)").val(),
+                    PirlantaYuzdelikModel: currentRow.find("li:eq(2) input:eq(0)").val(),
+                    FanteziYuzdelikModel: currentRow.find("li:eq(3) input:eq(0)").val(),
+                    GumusYuzdelikModel: currentRow.find("li:eq(4) input:eq(0)").val(),
+                    AltınYuzdelikModel: currentRow.find("li:eq(5) input:eq(0)").val(),
+                    SeramikYuzdelikModel: currentRow.find("li:eq(6) input:eq(0)").val(),
+                    DeriYuzdelikModel: currentRow.find("li:eq(7) input:eq(0)").val(),
+                    HediyelikYuzdelikModel: currentRow.find("li:eq(8) input:eq(0)").val(),
+                });
+            });
+            
+
+
+            var dataSend = {
+                Id: id_value,
+                InputTarihModel: $('#satisekrani_editor_input_tarih').val(),
+                InputAdSoyadModel: $('#satisekrani_editor_input_InputAdSoyadModel').val(),
+                SubeModel: $('#satisekrani_editor_select_inputSube').val(),
+                KontratNoModel: $('#satisekrani_editor_select_editorKontratNo').val(),
+                InputAciklamaModel: $('#satisekrani_editor_input_aciklama').val(),
+                OdemeSekli: $('#satisekrani_editor_select_inputOdemeSekliModel').val(),
+                OdemePesinMiktari: $('#satisekrani_editor_editorSatisPesinOdenenModel').val(),
+                OdemePesinMiktariCinsi: $('#satisekrani_editor_select_editorPesinOdenenCinsiModel').val(),
+                SatisTutariModel: $('#satisekrani_editor_editorSatisTutariModel').val(),
+                SatisParaCinsiModel: $('#satisekrani_editor_select_editorSatisParaCinsiModel').val(),
+                RezervasyonBilgiModel: $('#satisekrani_editor_select_editorRezervasyonBilgiModel').val(),
+                EtikekToplamiModel: $('#satisekrani_editor_editorEtikekToplamiModel').val(),
+                EtiketToplamiParaCinsiModel: $('#satisekrani_editor_select_editorSatisParaCinsiModel').val(),
+                SatisParitesiModel: $('#satisekrani_editor_editorSatisParitesiModel').val(),
+                UlkeModel: $('#satisekrani_editor_select_inputUlkesiModel').val(),
+                KargoUcretiModel: $('#satisekrani_editor_editorKargoUcretiModel').val(),
+                KargoUcretParaCinsiModel: $('#satisekrani_editor_select_editorKargoUcretParaCinsiModel').val(),
+                SatisSekliModel: $('#satisekrani_editor_select_editorSatisSekliModel').val(),
+                TaksitList: TaksitList,
+                AlinanOdemeler: AlinanOdemeler,
+                StokListModel: StokList,
+                SatisPersonelleriList: SatisPersonelleriListe
+            }
+
+            console.log(dataSend);
+
+            var data = JSON.stringify({ 'model': dataSend });
+            //return;
+
+            $.ajax({ 
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: '@Url.Action("SaveOrUpdate","SatisEkraniEditor")',
+                data: data, beforeSend: function () {
+                    $("#loading").css("display", "block");
+                },
+                success: function (result) {
+
+                    if (result.result == "ok") {
+                        hideModal();
+                        reloadGrid_satisekrani_liste_grid_id();
+
+                        ShowAlertMessage("Başarılı", "İşlem başarıyla gerçekleşti","success");
+
+                    } else {
+                        ShowAlertMessage("Hata", result.message, "alert");
+                    }
+                }
+            }).done(function () {
+                $("#loading").css("display", "none");
+            });
+        });
+
+    //ödeme şekli
+    $("#satisekrani_editor_select_inputOdemeSekliModel").on("change",
+        function() {
+            var val = $(this).val();
+            $.ajax({ 
+                type: 'POST',
+                url: '@Url.Action("GetOdemePartial", "SatisEkraniEditor")',
+                data: {odemeTipi:val},
+                TYPE: 'POST',
+                success: function (result) {
+                    $(".showOdemeTipi").html(result);
+                    if (val == 1) {
+                        $(".taksitBilgileriClass").css("display","none");
+                    } else {
+                        $(".taksitBilgileriClass").css("display","block");
+                    }
+                }
+            });
+        });
+     
+</script>

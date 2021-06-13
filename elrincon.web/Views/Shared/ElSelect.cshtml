@@ -1,0 +1,48 @@
+﻿@using System
+@using elrincon.web.Models.SharedModel
+
+@model elrincon.web.Models.SharedModel.ElSelectModel
+
+@{
+    string id = Model.Id;
+    string idS = !string.IsNullOrEmpty(id) ? id : "_" + Guid.NewGuid().ToString().Replace("-", "");
+
+    string disabledS = Model.Disabled ? "disabled" : "";
+    bool defaultBlank = !String.IsNullOrEmpty(Model.DefaultBlankOption);
+    string sinif = !string.IsNullOrEmpty(Model.Class) ? "gdselect " + Model.Class : "gdselect";
+    string displayCancelBtn = (Model.Disabled || !Model.CancelButton) ? "none" : "block";
+
+    <div style="display: grid">
+        <select id="@idS" class="@sinif" @disabledS>
+            @if (Model.SelectedIndex == -1)
+            {
+                <option value="@Model.DefaultBlankOptionValue" selected="selected" hidden>@Model.DefaultBlankOption</option>
+            }
+            @{
+                foreach (CodeValueDic codedValue in Model)
+                {
+                    bool selected = (Model.IndexOf(codedValue) == Model.SelectedIndex) && !defaultBlank;
+
+                    <option value="@codedValue.Code" @(selected ? "selected" : "")>@codedValue.Value</option>
+                }
+            }
+        </select>
+        <div class="btn" id="cancelButtonDivId" style="position: absolute; display: @displayCancelBtn !important; z-index: 1; margin-left: calc(100% - 34px) !important;">
+            <button class="btn" onclick="cancel_this_select(this)" style="background: none; border: none;width: 20px" title="Sil"><span style="background:none">X</span></button>
+        </div>
+    </div>
+}
+<script>
+
+    $("#@idS").attr("title", $("#@idS option:selected").text());
+
+    $("#@idS").on("change", function () {
+        var selected = $(this).find("option:selected").text();
+        $(this).attr("title", selected);
+    });
+
+    function cancel_this_select(e) {
+        $(e).parent().prev("select").val("");
+    }
+
+</script>

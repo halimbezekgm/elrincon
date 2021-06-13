@@ -1,0 +1,56 @@
+﻿@model elrincon.web.Models.FirmaDisiKayitlar.Acenta.AcentaEditorModel
+
+
+<div class="cell">
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Adı :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputAdiModel);}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Şehir :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputSehirModel);}
+                </div>
+            </div>
+        </div> 
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Tel. No1 :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElInput", @Model.InputTelNo1Model);}
+                </div>
+            </div>
+        </div> 
+        <div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Şubesi :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.SelectSubeModel);}
+                </div>
+            </div>
+        </div>
+        @*<div class="cell">
+            <div class="row">
+                <div class="input-caption">
+                    Bölümü :
+                </div>
+                <div class="input-value">
+                    @{Html.RenderPartial("ElSelect", @Model.SelectBolumModel);}
+                </div>
+            </div>
+        </div>*@
+      
+</div> 
